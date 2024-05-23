@@ -1,40 +1,29 @@
 <?php
-session_start();
+    session_start();
 
     require_once 'Classes/Connect.php';
     require_once 'Classes/Login.php';
     require_once 'Classes/User.php';
+    require_once 'Classes/checks.php';
 
-if (!isset($_SESSION['realestate_sessionid']) || !is_numeric($_SESSION['realestate_sessionid'])) {
-    header("Location: log_in.php");
-    die;
-}
+    // Check user
 
     $id = $_SESSION['realestate_sessionid'];
-    $login = new Login();
-    $result = $login->check_login($id);
+    $checks = new checks();
+    $user_data = $checks->check_client($id);
 
-if ($result) {
-    $user = new User($id);
-    $user_data = $user->get_data($id);
-
-    if (!$user_data) {
-            header("Location: log_in.php");
-            die;
-            } else if ($user_data['access'] !== 0) {
-                header("Location: home.php");
-        }
-    }else {
-            header("Location: log_in.php");
-            die;
-}
+    if($user_data){
+        echo 'Everything is fine';
+    } else {
+        header("Location: log_in.php");
+    }
 
 $db = new Database();
 
-$query = "select id from users where sessionid = ?";
-$params = [$id];
-$result = $db->read($query, $params);
-$userid = $result[0]['id'];
+//$query = "select id from users where sessionid = ?";
+//$params = [$id];
+//$result = $db->read($query, $params);
+$userid = $user_data['id'];
 
 $query = "select * from properties, saved_properties 
           where propertyid = spropertyid and userid = ?";

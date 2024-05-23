@@ -2,37 +2,30 @@
 
 session_start();
 
-    include("classes/connect.php");
-    include("classes/login.php");
-    include("classes/user.php");
+require_once 'classes/checks.php';
+require_once 'classes/connect.php';
+require_once 'classes/login.php';
+require_once 'classes/user.php';
 
-    $email = "";
-    $password = "";
+$email = "";
+$password = "";
 
-    //Automatic log-in if session exist:
-    
-    if (isset($_SESSION['realestate_sessionid']) && is_numeric($_SESSION['realestate_sessionid'])) {
+//Automatic log-in if session exist:
+if (isset($_SESSION['realestate_sessionid']) && is_numeric($_SESSION['realestate_sessionid'])) {
+        
         $id = $_SESSION['realestate_sessionid'];
-        $login = new Login();
-        $result = $login->check_login($id);
-    
-        if ($result) {
-            // Retrieve user data
-            $user = new User($id);
-            $user_data = $user->get_data($id);
-            if ($user_data) {
-            // Check access level
-            if ($user_data['access'] == 1) {
-                header("Location: agent_dashboard.php");
-                die;
-            } else{
-                    header("Location: home.php");
-                    die;
-                }
-            }
-        }
-    
+        $checks = new checks();
+        $user_data = $checks->check_agent($id);
+
+    if($user_data){
+        header("Location: agent_dashboard.php"); // Goes to agent page
+        exit();
     } else {
+        header("Location: user_dashboard.php"); // Goes to client page
+            exit();
+        }
+}
+
 // If not logged in, continue to display the login form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 
 {
@@ -44,25 +37,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         echo "The following errors occurred: <br><br>";
         echo $result;
         echo "</div>";
-    } else if ($user_data) {
-        // Check access level
-        if ($user_data['access'] == 1) {
-            header("Location: agent_dashboard.php");
-            die;
-        } else {
-                header("Location: user_home.php");
-                die;
-            }
     } else {
-        header("Location: log_in.php");
-        die;
+        header("Location: " . $_SERVER['PHP_SELF']); // Refreshes the current page
+        exit();
 }
         
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
 
-    }
 }
+
 
 ?>
 

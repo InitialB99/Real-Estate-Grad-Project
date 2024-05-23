@@ -19,5 +19,5 @@ class User
             return false;
         }
     }
-    
+
 }

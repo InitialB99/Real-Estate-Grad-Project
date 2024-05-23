@@ -38,6 +38,7 @@ if ($properties === false) {
           <li><a href="about.php" class="hover:shadow-lg">Despre noi</a></li>
           <li><a href="log_in.php" class="font-bold hover:shadow-lg">Intra in cont</a></li>
           <li><a href="sign_up.php" class="font-bold hover:shadow-lg">Cont nou</a></li>
+          <li><a href="log_out.php" class="font-bold hover:shadow-lg">Deconecteaza-te</a></li>
         </ul>
       </nav>
     </div>

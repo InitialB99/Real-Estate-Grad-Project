@@ -29,11 +29,6 @@ class Upload
                     $this->error .= "File is not an image.<br>";
                 }
 
-                // Check if file already exists
-                if (file_exists($this->target_file)) {
-                    $this->error .= "Sorry, file already exists.";
-                }
-
                 // Check file size
                 if ($files_data["image"]["size"] > 5000000) { // 5MB limit
                     $this->error .= "Sorry, your file is too large.";

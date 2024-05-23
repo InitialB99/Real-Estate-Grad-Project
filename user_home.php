@@ -4,30 +4,18 @@ session_start();
 require_once 'Classes/Connect.php';
 require_once 'Classes/Login.php';
 require_once 'Classes/User.php';
+require_once 'Classes/checks.php';
 
-if (!isset($_SESSION['realestate_sessionid']) || !is_numeric($_SESSION['realestate_sessionid'])) {
+// Check user
+
+$id = $_SESSION['realestate_sessionid'];
+$checks = new checks();
+$user_data = $checks->check_client($id);
+
+if($user_data){
+    echo 'Everything is fine';
+} else {
     header("Location: log_in.php");
-    die;
-}
-
-    $id = $_SESSION['realestate_sessionid'];
-    $login = new Login();
-    $result = $login->check_login($id);
-
-if ($result) {
-    $user = new User($id);
-    $user_data = $user->get_data($id);
-
-    if (!$user_data) {
-            header("Location: log_in.php");
-            die;
-            } else if ($user_data['access'] !== 0) {
-                header("Location: home.php");
-                die;
-        }
-    }else {
-            header("Location: log_in.php");
-            die;
 }
 
 $property_id = "";
