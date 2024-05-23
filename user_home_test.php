@@ -97,19 +97,52 @@ if ($result) {
         
         const LocatieEl = document.createElement('p');
         LocatieEl.innerText = `Locatie: ${card.location}`
-        titleEl.className = "text-xl font-bold mt-4";
+        titleEl.className = "text-gray-600";
 
         const priceEl = document.createElement('p');
         priceEl.innerText = `Pret: ${card.price}`
+        priceEl.className = "text-gray-600";
 
         const roomsEl = document.createElement('p');
         roomsEl.innerText = `Camere: ${card.rooms}`
+        roomsEl.className = "text-gray-600";
 
         const bathroomsEl = document.createElement('p');
         bathroomsEl.innerText = `Bai: ${card.bathrooms}`
+        bathroomsEl.className = "text-gray-600";
 
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.className = "flex justify-between mt-4";
 
-        wrapperDiv.append(imageEl, titleEl, LocatieEl, priceEl, roomsEl, bathroomsEl)
+        const detailsLink =document.createElement('a');
+        detailsLink.className = "bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700"
+        detailsLink.innerText = "Detalii"
+        detailsLink.href = `detalii_proprietate.php?${card.propertyid}`
+
+        // Create form element
+        const form = document.createElement('form');
+        form.setAttribute('action', 'user_home_test.php');
+        form.setAttribute('method', 'post');
+
+        // Create hidden input element
+        const hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'property_id');
+        hiddenInput.setAttribute('value', 'id');
+
+        // Create button element
+        const button = document.createElement('button');
+        button.setAttribute('type', 'submit');
+        button.setAttribute('name', 'save_property');
+        button.classList.add('bg-green-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-green-700');
+        button.textContent = 'Salveaza';
+
+        // Append hidden input and button to form
+        form.appendChild(hiddenInput);
+        form.appendChild(button);
+
+        buttonsContainer.append(detailsLink, form)
+        wrapperDiv.append(imageEl, titleEl, LocatieEl, priceEl, roomsEl, bathroomsEl, buttonsContainer)
 
         return wrapperDiv;
     }

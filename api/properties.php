@@ -5,7 +5,6 @@ require_once '../Classes/Connect.php';
 require_once '../Classes/Login.php';
 require_once '../Classes/User.php';
 
-// this is joe
 
 if (!isset($_SESSION['realestate_sessionid']) || !is_numeric($_SESSION['realestate_sessionid'])) {
     header("Location: log_in.php");
