@@ -89,13 +89,15 @@ if ($result) {
         
         const imageEl = document.createElement('img');
         imageEl.src = card.image;
-        imageEl.className = "text-xl font-bold mt-4"
+        imageEl.className = "w-full h-48 object-cover rounded-t-lg"
 
         const titleEl = document.createElement('h3');
         titleEl.textContent = card.title;
-
+        titleEl.className = "text-xl font-bold mt-4";
+        
         const LocatieEl = document.createElement('p');
         LocatieEl.innerText = `Locatie: ${card.location}`
+        titleEl.className = "text-xl font-bold mt-4";
 
         const priceEl = document.createElement('p');
         priceEl.innerText = `Pret: ${card.price}`
