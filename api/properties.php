@@ -6,11 +6,6 @@ require_once '../Classes/Login.php';
 require_once '../Classes/User.php';
 
 
-if (!isset($_SESSION['realestate_sessionid']) || !is_numeric($_SESSION['realestate_sessionid'])) {
-    header("Location: log_in.php");
-    die;
-}
-
 $id = $_SESSION['realestate_sessionid'];
 $login = new Login();
 $result = $login->check_login($id);
@@ -18,7 +13,7 @@ $result = $login->check_login($id);
 if ($result) {
     $user = new User($id);
     $user_data = $user->get_data($id);
-
+    
     if (!$user_data) {
         header("Location: log_in.php");
         die;
@@ -48,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
     $params = [$userid, $property_id];
 
     $db->save($query, $params);
-    header("Location: user_home.php"); // Refresh the page to avoid resubmission
+    header("Location: user_home_test.php"); // Refresh the page to avoid resubmission
     die;
 }
 
@@ -67,4 +62,3 @@ if (!empty($query_title)) {
 $properties = $db->read($query, $params);
 header('Content-type: application/json');
 echo json_encode($properties);
-?>

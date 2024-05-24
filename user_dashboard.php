@@ -12,9 +12,7 @@
     $checks = new checks();
     $user_data = $checks->check_client($id);
 
-    if($user_data){
-        echo 'Everything is fine';
-    } else {
+    if(!$user_data){
         header("Location: log_in.php");
     }
 
@@ -46,20 +44,19 @@ $saved_properties = $db->read($query, $params);
             <nav>
                 <ul class="list-none flex space-x-8">
                     <li><a href="user_home.php" class="hover:shadow-lg">Acasa</a></li>
-                    <li><a href="user_dashboard.php" class="hover:shadow-lg">Dashboard</a></li>
                     <li><a href="log_out.php" class="font-bold hover:shadow-lg">Deconecteaza-te</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main class="container mx-auto py-12">
+    <main class="container mx-auto py-8">
         <section class="p-12 bg-white rounded-lg shadow-md">
-            <h1 class="text-3xl font-bold mb-4 text-center">Proprietatile Salvate</h1>
+            <h1 class="text-3xl font-bold mb-8 text-center">Proprietatile salvate de tine</h1>
             <div class="property-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <?php if ($saved_properties): ?>
                     <?php foreach ($saved_properties as $property): ?>
-                        <div class="property-item bg-white p-4 rounded-lg shadow-md">
+                        <div class="property-item bg-white p-4 rounded-lg shadow-xl mt-8">
                             <h4 class="text-lg font-bold mb-2"><?php echo htmlspecialchars($property['title']); ?></h4>
                             <p class="text-gray-700"><?php echo htmlspecialchars($property['description']); ?></p>
                             <p class="text-gray-700">Locatie: <?php echo htmlspecialchars($property['location']); ?></p>
