@@ -53,6 +53,7 @@ class Upload
     public function upload_image($post_data,$files_data){
             if(move_uploaded_file($files_data["image"]["tmp_name"], $this->target_file)){
 
+                $agentid = ($post_data["agentid"]);
                 $title = ucfirst($post_data["title"]);
                 $description = ucfirst($post_data["description"]);
                 $location = ucfirst($post_data["location"]);
@@ -61,8 +62,8 @@ class Upload
                 $bathrooms = $post_data["bathrooms"];
                 $imagePath = $this->target_file;
 
-                $query = "insert into properties (title, description, location, price, rooms, bathrooms, image, featured) VALUES (?,?,?,?,?,?,?,?)";
-                $params = [$title, $description, $location, $price, $rooms, $bathrooms, $imagePath, 0];
+                $query = "insert into properties (agentid, title, description, location, price, rooms, bathrooms, image, featured) VALUES (?,?,?,?,?,?,?,?,?)";
+                $params = [$agentid, $title, $description, $location, $price, $rooms, $bathrooms, $imagePath, 0];
 
                 $DB = new Database();
                 $DB->save($query, $params);

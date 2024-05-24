@@ -1,54 +1,38 @@
 <?php
 session_start();
 
-require_once '../Classes/Connect.php';
-require_once '../Classes/Login.php';
-require_once '../Classes/User.php';
+require_once 'Classes/Connect.php';
+require_once 'Classes/Login.php';
+require_once 'Classes/User.php';
+require_once 'Classes/checks.php';
 
-
+// Check user
 $id = $_SESSION['realestate_sessionid'];
-$login = new Login();
-$result = $login->check_login($id);
+$checks = new checks();
+$user_data = $checks->check_client($id);
 
-if ($result) {
-    $user = new User($id);
-    $user_data = $user->get_data($id);
-    
-    if (!$user_data) {
-        header("Location: log_in.php");
-        die;
-    } else if ($user_data['access'] !== 0) {
-        header("Location: home.php");
-        die;
-    }
-} else {
+if(!$user_data){
     header("Location: log_in.php");
-    die;
 }
 
-$property_id = "";
+$db = new Database();
 
-// Handle saving properties
+//SAVE PROPERTY
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
     $property_id = $_POST['property_id'];
 
-    $db = new Database();
-
-    $query = "SELECT id FROM users WHERE sessionid = ?";
+    $query = "select id from users where sessionid = ?";
     $params = [$id];
-    $result = $db->read($query, $params);
-    $userid = $result[0]['id'];
+    $result = $db->read($query, $params)[0];
+    $userid = $result['id'];
 
-    $query = "INSERT INTO saved_properties (userid, spropertyid) VALUES (?, ?)";
+    $query = "insert into saved_properties (userid, spropertyid) 
+              values (?, ?)";
     $params = [$userid, $property_id];
-
     $db->save($query, $params);
-    header("Location: user_home_test.php"); // Refresh the page to avoid resubmission
-    die;
 }
 
 // Show properties
-$db = new Database();
 $query_title = isset($_GET['q']) ? $_GET['q'] : '';
 
 $params = [];

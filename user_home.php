@@ -7,7 +7,6 @@ require_once 'Classes/User.php';
 require_once 'Classes/checks.php';
 
 // Check user
-
 $id = $_SESSION['realestate_sessionid'];
 $checks = new checks();
 $user_data = $checks->check_client($id);
@@ -16,13 +15,11 @@ if(!$user_data){
     header("Location: log_in.php");
 }
 
-$property_id = "";
+$db = new Database();
 
 //SAVE PROPERTY
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
     $property_id = $_POST['property_id'];
-
-    $db = new Database();
 
     $query = "select id from users where sessionid = ?";
     $params = [$id];
@@ -32,13 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
     $query = "insert into saved_properties (userid, spropertyid) 
               values (?, ?)";
     $params = [$userid, $property_id];
-
     $db->save($query, $params);
-
 }
 
 // Show properties
-$db = new Database();
 $query = 'select * from properties limit 9';
 $params = [];
 $properties = $db->read($query, $params);

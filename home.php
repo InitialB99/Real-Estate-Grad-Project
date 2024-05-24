@@ -12,8 +12,6 @@ require_once 'Classes/checks.php';
     $user_data = $checks->check_agent($id);
 
     if($user_data){
-        echo 'Everything is fine';
-    } else {
         header("Location: log_in.php");
     }
 

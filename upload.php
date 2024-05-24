@@ -1,6 +1,14 @@
 <?php
 session_start();
 require_once 'Classes/upload.php';
+require_once 'Classes/checks.php';
+
+    $id = $_SESSION['realestate_sessionid'];
+    $checks = new checks();
+    $user_data = $checks->check_agent($id);
+    if(!$user_data){
+        header("Location: log_in.php");
+    }
 
 $result = "";
 $title = "";
@@ -97,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="image" class="block text-lg font-medium">Upload Image</label>
                     <input type="file" name="image" id="image" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" accept="image/*" required>
                 </div>
+                <input type="hidden" name="agentid" value="<?php echo $user_data['id']; ?>">
                 <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700">Upload</button>
             </form>
         </section>

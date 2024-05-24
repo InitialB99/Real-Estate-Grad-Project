@@ -12,9 +12,7 @@ session_start();
     $checks = new checks();
     $user_data = $checks->check_agent($id);
 
-    if($user_data){
-        echo 'Everything is fine';
-    } else {
+    if(!$user_data){
         header("Location: log_in.php");
     }
 
