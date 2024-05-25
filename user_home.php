@@ -16,20 +16,39 @@ if(!$user_data){
 }
 $db = new Database();
 
+$query = "select id from users where sessionid = ?";
+$params = [$id];
+$result = $db->read($query, $params)[0];
+$userid = $result['id'];
+
 //SAVE PROPERTY
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
     $property_id = $_POST['property_id'];
-
-    $query = "select id from users where sessionid = ?";
-    $params = [$id];
-    $result = $db->read($query, $params)[0];
-    $userid = $result['id'];
 
     $query = "insert into saved_properties (userid, spropertyid) 
               values (?, ?)";
     $params = [$userid, $property_id];
     $db->save($query, $params);
+    header("Location: user_home.php");
+    exit();
 }
+
+// Handle unsave property
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['unsave_property'])) {
+    $property_id = $_POST['property_id'];
+
+    $query = "DELETE FROM saved_properties WHERE userid = ? AND spropertyid = ?";
+    $params = [$userid, $property_id];
+    $db->save($query, $params);
+    header("Location: user_home.php");
+    exit();
+}
+
+// Fetch saved properties for the user
+$query = "SELECT spropertyid FROM saved_properties WHERE userid = (SELECT id FROM users WHERE sessionid = ?)";
+$params = [$id];
+$savedProperties = $db->read($query, $params);
+$savedPropertiesIds = array_column($savedProperties, 'spropertyid');
 
 ?>
 <!DOCTYPE html>
@@ -83,6 +102,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
 </html>
 
 <script>
+    const savedPropertiesIds = <?php echo json_encode($savedPropertiesIds); ?>;
+    console.log('Saved Properties IDs:', savedPropertiesIds);
+
     function createCardNode(card) {
         const wrapperDiv = document.createElement('div');
         wrapperDiv.className = "bg-white rounded-lg shadow-md p-4";
@@ -93,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
 
         const titleEl = document.createElement('h3');
         titleEl.textContent = card.title;
-        titleEl.className = "text-xl font-bold mt-4";
+        titleEl.className = "text-xl font-bold mt-4 mb-2";
         
         const LocatieEl = document.createElement('p');
         LocatieEl.innerText = `Locatie: ${card.location}`
@@ -121,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
 
         // Create form element
         const form = document.createElement('form');
-        form.setAttribute('action', 'user_home_test.php');
+        form.setAttribute('action', 'user_home.php');
         form.setAttribute('method', 'post');
 
         // Create hidden input element
@@ -133,9 +155,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
         // Create button element
         const button = document.createElement('button');
         button.setAttribute('type', 'submit');
-        button.setAttribute('name', 'save_property');
-        button.classList.add('bg-green-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-green-700');
-        button.textContent = 'Salveaza';
+        if (savedPropertiesIds.includes(card.propertyid)) {
+            button.setAttribute('name', 'unsave_property');
+            button.classList.add('bg-blue-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-blue-700');
+            button.textContent = 'Salvat';
+        } else {
+            button.setAttribute('name', 'save_property');
+            button.classList.add('bg-green-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-green-700');
+            button.textContent = 'Salveaza';
+        }
 
         // Append hidden input and button to form
         form.appendChild(hiddenInput);

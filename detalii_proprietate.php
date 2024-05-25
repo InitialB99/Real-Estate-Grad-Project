@@ -23,7 +23,6 @@ $result = $db->read($query, $params)[0];
 $userid = $result['id'];
 $username = $result['first_name'];
 
-$db = new Database();
 $query = 'select * from properties where propertyid = ?';
 $params = [$propertyid];
 $property = $db->read($query, $params)[0];
@@ -32,29 +31,35 @@ if(!$property){
   die('Property not found.');
 }
 
+// Check if property is already saved
+$query = "SELECT * FROM saved_properties WHERE userid = ? AND spropertyid = ?";
+$params = [$userid, $propertyid];
+$savedProperty = $db->read($query, $params);
+
 //SAVE PROPERTY
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
-
-  $db = new Database();
-
-  $query = "select id from users where sessionid = ?";
-  $params = [$id];
-  $result = $db->read($query, $params)[0];
-  $userid = $result['id'];
 
   $query = "insert into saved_properties (userid, spropertyid) 
             values (?, ?)";
   $params = [$userid, $propertyid];
-
   $db->save($query, $params);
+  header("Location: detalii_proprietate.php?id=$propertyid");
+  exit();
+}
+
+// UNSAVE PROPERTY
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['unsave_property'])) {
+  $query = "DELETE FROM saved_properties WHERE userid = ? AND spropertyid = ?";
+  $params = [$userid, $propertyid];
+  $db->save($query, $params);
+  header("Location: detalii_proprietate.php?id=$propertyid");
+  exit();
 }
 
 //POST COMMENT
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['post_comment'])) {
   $comment = $_POST['comment'];
   $current_date = date("Y-m-d H:i:s");
-
-  $db = new Database();
 
   $query = "insert into comments (userid,cpropertyid,username,comment,date)
             values (?,?,?,?,?)";
@@ -118,9 +123,15 @@ $comments = $db->read($query,$params);
           <p class="text-gray-800">Bai: <?php echo htmlspecialchars($property['bathrooms']); ?></p>
           <p class="text-gray-800 mb-4"><?php echo htmlspecialchars($property['description']); ?></p>
           <div class="flex justify-between mt-4">
-              <form action="detalii_proprietate.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post">
-                  <button type="submit" name="save_property" class="bg-green-500 text-white px-4 py-2 rounded-md font-bold hover:bg-green-700">Salveaza</button>
-              </form>
+              <?php if ($savedProperty): ?>
+                  <form action="detalii_proprietate.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post">
+                      <button type="submit" name="unsave_property" class="bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700">Unsave</button>
+                  </form>
+              <?php else: ?>
+                  <form action="detalii_proprietate.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post">
+                      <button type="submit" name="save_property" class="bg-green-500 text-white px-4 py-2 rounded-md font-bold hover:bg-green-700">Salveaza</button>
+                  </form>
+              <?php endif; ?>
           </div>
 
         <div class="contact-agent bg-gray-100 rounded-lg p-4 mb-8">
