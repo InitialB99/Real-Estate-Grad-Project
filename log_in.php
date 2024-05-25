@@ -5,7 +5,6 @@ session_start();
 require_once 'classes/checks.php';
 require_once 'classes/connect.php';
 require_once 'classes/login.php';
-require_once 'classes/user.php';
 
 $email = "";
 $password = "";

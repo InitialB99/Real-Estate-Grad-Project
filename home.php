@@ -10,8 +10,8 @@ require_once 'Classes/checks.php';
     $id = $_SESSION['realestate_sessionid'];
     $checks = new checks();
     $user_data = $checks->check_agent($id);
-
-    if($user_data){
+    
+    if(!$user_data){
         header("Location: log_in.php");
     }
 

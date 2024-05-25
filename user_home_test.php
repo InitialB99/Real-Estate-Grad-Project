@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
         const hiddenInput = document.createElement('input');
         hiddenInput.setAttribute('type', 'hidden');
         hiddenInput.setAttribute('name', 'property_id');
-        hiddenInput.setAttribute('value', 'id');
+        hiddenInput.setAttribute('value', card.propertyid);
 
         // Create button element
         const button = document.createElement('button');

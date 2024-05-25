@@ -1,12 +1,12 @@
 <?php
-require_once 'classes/user.php';
+include_once 'Classes/user.php';
 
 class Checks
 {
 
     private $error = "";
 
-    public function check_client($id)
+    private function check_user($id, $access_level)
     {
 
         if (!isset($id) || !is_numeric($id)){
@@ -21,11 +21,11 @@ class Checks
             $this->error = 'No data!';
         }
                 
-            if($user_data['access'] !== 0)
-            {
-                $this->error .= 'Wrong access!';
-            }
-            
+        if($user_data['access'] !== $access_level)
+        {
+            $this->error .= 'Wrong access!';
+        }
+        
 
         if ($this->error == "") {
             // no error
@@ -35,32 +35,14 @@ class Checks
         }
     }
 
+    public function check_client($id)
+    {
+        return $this->check_user($id, 0);
+    }
+
     public function check_agent($id)
     {
 
-        if (!isset($id) || !is_numeric($id)){
-            $this->error .= 'No sessionid!';
-        }
-
-        $user = new User();
-        $user_data = $user->get_data($id);
-
-        if(!$user_data)
-        {
-            $this->error = 'No data!';
-        }
-                
-            if($user_data['access'] !== 1)
-            {
-                $this->error .= 'Wrong access!';
-            }
-            
-
-        if ($this->error == "") {
-            // no error
-            return $user_data;
-        }else {
-            return false;
-        }
+        return $this->check_user($id, 1);
     }
 }
