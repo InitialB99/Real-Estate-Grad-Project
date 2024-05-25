@@ -4,7 +4,6 @@ session_start();
 include_once '../Classes/connect.php';
 include_once '../Classes/Login.php';
 
-// Check user
 $id = $_SESSION['realestate_sessionid'];
 $db = new Database();
 
