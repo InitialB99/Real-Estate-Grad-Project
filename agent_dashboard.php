@@ -7,7 +7,6 @@ session_start();
     require_once 'Classes/checks.php';
 
     // Check user
-
     $id = $_SESSION['realestate_sessionid'];
     $checks = new checks();
     $user_data = $checks->check_agent($id);
@@ -37,8 +36,8 @@ $properties = $db->read($query, $params);
             <h1 class="text-xl font-bold">Buna, <?php echo htmlspecialchars($user_data['first_name'])?>!</h1>
             <nav>
                 <ul class="list-none flex space-x-8">
-                    <li><a href="home.php" class="hover:shadow-lg">Acasa</a></li>
-                    <li><a href=# class="hover:shadow-lg">Dashboard</a></li>
+                    <li><a href="agent_home.php" class="hover:shadow-lg">Acasa</a></li>
+                    <li><a href="update_agent.php" class="hover:shadow-lg">Actualizeaza informatiile</a></li>
                     <li><a href="log_out.php" class="font-bold hover:shadow-lg">Deconecteaza-te</a></li>
                 </ul>
             </nav>
@@ -70,7 +69,7 @@ $properties = $db->read($query, $params);
                                 <p class="text-gray-700">Pret: $<?php echo htmlspecialchars($property['price']); ?></p>
                                 <p class="text-gray-700">Camere: <?php echo htmlspecialchars($property['rooms']); ?></p>
                                 <p class="text-gray-700">Bai: <?php echo htmlspecialchars($property['bathrooms']); ?></p>
-                                <a href="detalii_proprietate.php?id=<?php echo htmlspecialchars($property['propertyid']); ?>" class="block mt-4 bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700">Editeaza</a>
+                                <a href="update_property.php?id=<?php echo htmlspecialchars($property['propertyid']); ?>" class="block mt-4 bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700">Editeaza</a>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>

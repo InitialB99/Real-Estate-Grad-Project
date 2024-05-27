@@ -17,10 +17,10 @@ if (isset($_SESSION['realestate_sessionid']) && is_numeric($_SESSION['realestate
         $user_data = $checks->check_agent($id);
 
     if($user_data){
-        header("Location: agent_dashboard.php"); // Goes to agent page
+        header("Location: agent_home.php"); // Goes to agent page
         exit();
     } else {
-        header("Location: user_dashboard.php"); // Goes to client page
+        header("Location: user_home.php"); // Goes to client page
             exit();
         }
 }

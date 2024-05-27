@@ -14,14 +14,11 @@
 
     if(!$user_data){
         header("Location: log_in.php");
+    } else{
+    $userid = $user_data['id'];
     }
 
 $db = new Database();
-
-//$query = "select id from users where sessionid = ?";
-//$params = [$id];
-//$result = $db->read($query, $params);
-$userid = $user_data['id'];
 
 $query = "select * from properties, saved_properties 
           where propertyid = spropertyid and userid = ?";
@@ -44,6 +41,7 @@ $saved_properties = $db->read($query, $params);
             <nav>
                 <ul class="list-none flex space-x-8">
                     <li><a href="user_home.php" class="hover:shadow-lg">Acasa</a></li>
+                    <li><a href="update_user.php" class="hover:shadow-lg">Actualizeaza informatiile</a></li>
                     <li><a href="log_out.php" class="font-bold hover:shadow-lg">Deconecteaza-te</a></li>
                 </ul>
             </nav>
@@ -53,10 +51,12 @@ $saved_properties = $db->read($query, $params);
     <main class="container mx-auto py-8">
         <section class="p-12 bg-white rounded-lg shadow-md">
             <h1 class="text-3xl font-bold mb-8 text-center">Proprietatile salvate de tine</h1>
+            
             <div class="property-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <?php if ($saved_properties): ?>
                     <?php foreach ($saved_properties as $property): ?>
                         <div class="property-item bg-white p-4 rounded-lg shadow-xl mt-8">
+                            <img src="<?php echo htmlspecialchars($property['image']); ?>" alt="Property Image" class="w-full h-48 object-cover rounded-t-lg">
                             <h4 class="text-lg font-bold mb-2"><?php echo htmlspecialchars($property['title']); ?></h4>
                             <p class="text-gray-700"><?php echo htmlspecialchars($property['description']); ?></p>
                             <p class="text-gray-700">Locatie: <?php echo htmlspecialchars($property['location']); ?></p>
@@ -70,6 +70,7 @@ $saved_properties = $db->read($query, $params);
                     <p class="text-gray-700">Nu s-au găsit proprietăți salvate.</p>
                 <?php endif; ?>
             </div>
+            
         </section>
     </main>
 </body>

@@ -24,7 +24,7 @@ class Database
         $stmt = $conn->prepare($query);
 
         if (!$stmt) {
-            die('Prepare failed: ' . $conn->error);
+            return 'Prepare failed: ' . $conn->error;
         } else {
 
             $this->bindParams($stmt, $params);
@@ -32,9 +32,9 @@ class Database
             $result = $stmt->get_result();
 
         if ($result === false) {
-            return false;
-        }
-
+            return 'Get result failed: ' . $stmt->error;
+        } 
+        
             $data = [];
             while ($row = $result->fetch_assoc()) {
                 $data[] = $row;
@@ -54,7 +54,7 @@ class Database
 
         if (!$stmt) {
             die('Prepare failed: ' . $conn->error);
-        } else {
+        } else{
 
             $this->bindParams($stmt, $params);
 

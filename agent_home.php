@@ -2,47 +2,24 @@
 session_start();
 
 require_once 'Classes/Connect.php';
+require_once 'Classes/Login.php';
 require_once 'Classes/checks.php';
 require_once 'Classes/manageproperty.php';
 
-//CHECKS USER
+// Check user
 $id = $_SESSION['realestate_sessionid'];
 $db = new Database();
 $manageProperty = new ManageProperty;
 $checks = new checks();
 
-$user_data = $checks->check_client($id);
-if($user_data === false){
+$user_data = $checks->check_agent($id);
+if (!$user_data) {
     header("Location: log_in.php");
 }
 
-//TAKES USER ID
+// TAKES USER ID
 $userid = $user_data['id'];
 $username = $user_data['first_name'];
-
-//SAVE PROPERTY
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
-    $property_id = $_POST['property_id'];
-
-    $result = $manageProperty->saveProperty($userid, $property_id);
-        //header("Location: user_home.php");
-        //exit();    
-}
-
-//UNSAVE PROPERTY
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['unsave_property'])) {
-    $property_id = $_POST['property_id'];
-
-    $result = $manageProperty->unsaveProperty($userid, $property_id);
-        //header("Location: user_home.php");
-        //exit();
-}
-
-// Fetch saved properties for the user
-$query = "SELECT spropertyid FROM saved_properties WHERE userid = ?";
-$params = [$userid];
-$savedProperties = $db->read($query, $params);
-$savedPropertiesIds = array_column($savedProperties, 'spropertyid');
 
 ?>
 <!DOCTYPE html>
@@ -61,7 +38,7 @@ $savedPropertiesIds = array_column($savedProperties, 'spropertyid');
             <h1 class="text-xl font-bold"><?php echo "Bine ai venit, " . htmlspecialchars($user_data['first_name']) . "!"; ?></h1>
             <nav>
                 <ul class="list-none flex space-x-8">
-                    <li><a href="user_dashboard.php" class="hover:shadow-lg">Contul Meu</a></li>
+                    <li><a href="agent_dashboard.php" class="hover:shadow-lg">Contul meu</a></li>
                     <li><a href="#" class="hover:shadow-lg">Contact</a></li>
                     <li><a href="log_out.php" class="font-bold hover:shadow-lg">Deconecteaza-te</a></li>
                 </ul>
@@ -70,7 +47,6 @@ $savedPropertiesIds = array_column($savedProperties, 'spropertyid');
     </header>
 
     <main class="container mx-auto py-12">
-
         <section class="search-bar flex flex-col items-center mb-8">
             <p class="text-xl font-bold mb-4">Cauta o proprietate</p>
             <form id="search-form" class="flex w-full">
@@ -96,75 +72,40 @@ $savedPropertiesIds = array_column($savedProperties, 'spropertyid');
 </html>
 
 <script>
-    const savedPropertiesIds = <?php echo json_encode($savedPropertiesIds); ?>;
-    console.log('Saved Properties IDs:', savedPropertiesIds);
-
     function createCardNode(card) {
         const wrapperDiv = document.createElement('div');
         wrapperDiv.className = "bg-white rounded-lg shadow-md p-4";
         
         const imageEl = document.createElement('img');
         imageEl.src = card.image;
-        imageEl.className = "w-full h-48 object-cover rounded-t-lg"
+        imageEl.className = "w-full h-48 object-cover rounded-t-lg";
 
         const titleEl = document.createElement('h3');
         titleEl.textContent = card.title;
         titleEl.className = "text-xl font-bold mt-4 mb-2";
         
         const LocatieEl = document.createElement('p');
-        LocatieEl.innerText = `Locatie: ${card.location}`
-        titleEl.className = "text-gray-600";
+        LocatieEl.innerText = `Locatie: ${card.location}`;
+        LocatieEl.className = "text-gray-600";
 
         const priceEl = document.createElement('p');
-        priceEl.innerText = `Pret: ${card.price}`
+        priceEl.innerText = `Pret: ${card.price}`;
         priceEl.className = "text-gray-600";
 
         const roomsEl = document.createElement('p');
-        roomsEl.innerText = `Camere: ${card.rooms}`
+        roomsEl.innerText = `Camere: ${card.rooms}`;
         roomsEl.className = "text-gray-600";
 
         const bathroomsEl = document.createElement('p');
-        bathroomsEl.innerText = `Bai: ${card.bathrooms}`
-        bathroomsEl.className = "text-gray-600";
+        bathroomsEl.innerText = `Bai: ${card.bathrooms}`;
+        bathroomsEl.className = "text-gray-600 mb-4";
 
-        const buttonsContainer = document.createElement('div');
-        buttonsContainer.className = "flex justify-between mt-4";
+        const detailsLink = document.createElement('a');
+        detailsLink.className = "bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700";
+        detailsLink.innerText = "Detalii";
+        detailsLink.href = `property_details.php?id=${card.propertyid}`;
 
-        const detailsLink =document.createElement('a');
-        detailsLink.className = "bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700"
-        detailsLink.innerText = "Detalii"
-        detailsLink.href = `detalii_proprietate.php?id=${card.propertyid}`
-
-        // Create form element
-        const form = document.createElement('form');
-        form.setAttribute('action', 'user_home.php');
-        form.setAttribute('method', 'post');
-
-        // Create hidden input element
-        const hiddenInput = document.createElement('input');
-        hiddenInput.setAttribute('type', 'hidden');
-        hiddenInput.setAttribute('name', 'property_id');
-        hiddenInput.setAttribute('value', card.propertyid);
-
-        // Create button element
-        const button = document.createElement('button');
-        button.setAttribute('type', 'submit');
-        if (savedPropertiesIds.includes(card.propertyid)) {
-            button.setAttribute('name', 'unsave_property');
-            button.classList.add('bg-blue-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-blue-700');
-            button.textContent = 'Salvat';
-        } else {
-            button.setAttribute('name', 'save_property');
-            button.classList.add('bg-green-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-green-700');
-            button.textContent = 'Salveaza';
-        }
-
-        // Append hidden input and button to form
-        form.appendChild(hiddenInput);
-        form.appendChild(button);
-
-        buttonsContainer.append(detailsLink, form)
-        wrapperDiv.append(imageEl, titleEl, LocatieEl, priceEl, roomsEl, bathroomsEl, buttonsContainer)
+        wrapperDiv.append(imageEl, titleEl, LocatieEl, priceEl, roomsEl, bathroomsEl, detailsLink);
 
         return wrapperDiv;
     }
@@ -173,7 +114,7 @@ $savedPropertiesIds = array_column($savedProperties, 'spropertyid');
         const cardContainer = document.querySelector('#card-container');
         
         // clear the old items
-        cardContainer.innerHTML = ''
+        cardContainer.innerHTML = '';
     
         // display loading
         
@@ -182,24 +123,22 @@ $savedPropertiesIds = array_column($savedProperties, 'spropertyid');
         
         // hide loading
 
-
         if (data?.length === 0) {
-            document.querySelector('#no-data').classList.toggle('hidden')
+            document.querySelector('#no-data').classList.toggle('hidden');
             return;    
         }
 
-        // display elememts
+        // display elements
         data?.forEach(apartment => {
-            const cardEl = createCardNode(apartment)
+            const cardEl = createCardNode(apartment);
             cardContainer.append(cardEl);
         });
     }
 
-
     document.getElementById('search-form').onsubmit = (event) => {
-        event.preventDefault()
-        loadApartmentCards(event.target[0].value)
+        event.preventDefault();
+        loadApartmentCards(event.target[0].value);
     }
 
-    window.onload = () => loadApartmentCards()
+    window.onload = () => loadApartmentCards();
 </script>

@@ -27,13 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //print_r($_FILES);
     //print_r($_POST);
 
-    if ($result != "") {
+    if ($result !== true) {
         echo "<div class='text-center text-sm text-white bg-gray-700 rounded-lg p-4'>";
         echo "The following errors occurred: <br><br>";
         echo $result;
         echo "</div>";
     } else { 
-        header("Location: Home.php");
+        header("Location: agent_dashboard.php");
         exit();
     }
 
@@ -104,6 +104,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div>
                     <label for="image" class="block text-lg font-medium">Upload Image</label>
                     <input type="file" name="image" id="image" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" accept="image/*" required>
+                </div>
+                <div>
+                    <label for="image2" class="block text-lg font-medium">Upload Image 2</label>
+                    <input type="file" name="image2" id="image2" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" accept="image/*" required>
                 </div>
                 <input type="hidden" name="agentid" value="<?php echo $user_data['id']; ?>">
                 <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700">Upload</button>

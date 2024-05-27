@@ -2,58 +2,69 @@
 session_start();
 
 require_once 'Classes/connect.php';
+require_once 'Classes/manageproperty.php';
+require_once 'Classes/user.php';
 
-  //TAKES PROPERTYID
-  if(isset($_GET['id'])){
-    $propertyid = $_GET['id'];
-  } 
-  
-  if(empty($propertyid)){
-    die('Property ID is missing.');
-  }
-
-  //TAKES SESSIONID
+//TAKES SESSIONID
 $id = $_SESSION['realestate_sessionid'];
+if(empty($id)){
+  header("Location: log_in.php");
+        die;
+}
 
 $db = new Database();
+$user_data = new User();
+$manageProperty = new manageProperty;
 
-$query = "select * from users where sessionid = ?";
-$params = [$id];
-$result = $db->read($query, $params)[0];
+//TAKES PROPERTYID
+if(isset($_GET['id'])){
+  $propertyid = $_GET['id'];
+} 
+if(empty($propertyid)){
+  die('Property ID is missing.');
+}
+
+//TAKES USER ID and NAME
+$result = $user_data->get_data($id);
 $userid = $result['id'];
 $username = $result['first_name'];
 
+//TAKES PROPERTY DATA
 $query = 'select * from properties where propertyid = ?';
 $params = [$propertyid];
 $property = $db->read($query, $params)[0];
-
-if(!$property){
-  die('Property not found.');
+  if(!$property){
+    die('Property not found.');
 }
 
+//GET AGENT INFO
+$query = 'select * from users, properties where id = agentid and agentid = ? limit 1';
+$params = [$property['agentid']];
+$agentid = $db->read($query, $params)[0];
+
 // Check if property is already saved
-$query = "SELECT * FROM saved_properties WHERE userid = ? AND spropertyid = ?";
-$params = [$userid, $propertyid];
-$savedProperty = $db->read($query, $params);
+$savedProperty = $manageProperty->checkSaved($userid, $propertyid);
 
 //SAVE PROPERTY
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_property'])) {
-
-  $query = "insert into saved_properties (userid, spropertyid) 
-            values (?, ?)";
-  $params = [$userid, $propertyid];
-  $db->save($query, $params);
-  header("Location: detalii_proprietate.php?id=$propertyid");
-  exit();
+  $result = $manageProperty->saveProperty($userid, $propertyid);
+    if($result === true){
+    header("Location: detalii_proprietate.php?id=$propertyid");
+    exit();
+  } else{
+    echo $result;
+  }
 }
 
 // UNSAVE PROPERTY
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['unsave_property'])) {
-  $query = "DELETE FROM saved_properties WHERE userid = ? AND spropertyid = ?";
-  $params = [$userid, $propertyid];
-  $db->save($query, $params);
-  header("Location: detalii_proprietate.php?id=$propertyid");
-  exit();
+  $result = $manageProperty->unsaveProperty($userid, $propertyid);
+    if($result === true){
+    header("Location: detalii_proprietate.php?id=$propertyid");
+    exit();
+  } else{
+    echo $result;
+  }
 }
 
 //POST COMMENT
@@ -107,7 +118,7 @@ $comments = $db->read($query,$params);
               <img src="<?php echo htmlspecialchars($property['image']); ?>" alt="Property Image 1" class="w-auto h-auto object-cover rounded-lg">
             </div>
             <div class="swiper-slide">
-              <img src="property-image2.jpg" alt="Property Image 2" class="w-full h-auto object-cover rounded-lg">
+              <img src="<?php echo htmlspecialchars($property['image2']); ?>" alt="Property Image 2" class="w-full h-auto object-cover rounded-lg">
             </div>
           </div>
           <div class="swiper-button-prev"></div>
@@ -125,7 +136,7 @@ $comments = $db->read($query,$params);
           <div class="flex justify-between mt-4">
               <?php if ($savedProperty): ?>
                   <form action="detalii_proprietate.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post">
-                      <button type="submit" name="unsave_property" class="bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700">Unsave</button>
+                      <button type="submit" name="unsave_property" class="bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700">Salvat</button>
                   </form>
               <?php else: ?>
                   <form action="detalii_proprietate.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post">
@@ -135,10 +146,10 @@ $comments = $db->read($query,$params);
           </div>
 
         <div class="contact-agent bg-gray-100 rounded-lg p-4 mb-8">
-          <h3 class="text-xl font-bold mb-2">Scrie un mesaj</h3>
-          <p class="text-gray-600 mb-2">Numarul Agentului: <span class="font-bold">XXXX-YYYY-ZZZZ</span></p>
+          <h3 class="text-xl font-bold mb-2">Agent: <?php echo htmlspecialchars($agentid['first_name']); ?></h3>
+          <p class="text-gray-600 mb-2 font-bold">Scrie un mesaj sau apeleaza agentul: <span class="font-bold"><?php echo htmlspecialchars($agentid['number']); ?></span></p>
           <form action="detalii_proprietate.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post">
-            <textarea type="text" name="comment" id="comment" rows="5" class="w-full rounded-lg border px-4 py-2 focus:outline-none focus:border-blue-500"></textarea>
+            <textarea type="text" name="comment" id="comment" rows="5" placeholder="Lasa un mesaj iar agentul te va contacta cat mai curand posibil!" class="w-full rounded-lg border px-4 py-2 focus:outline-none focus:border-blue-500"></textarea>
             <button type="submit" name="post_comment"class="bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700 mt-4">Trimite mesaj</button>
           </form>
         </div>
