@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-4">Sign In</h1>
+    <div class="container mx-auto px-4 mt-8 py-8">
+        <h1 class="text-3xl font-bold mt-2 mb-4">Sign In</h1>
 
         <form method="post" class="max-w-md mx-auto">
             <div class="mb-4">
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <button id='b'
-                class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Create an Account</button>
+                class="w-full bg-customBlue-500 text-white py-2 px-4 rounded-lg hover:bg-customBlue-600 transition duration-200">Create an Account</button>
         </form>
     </div>
 </body>

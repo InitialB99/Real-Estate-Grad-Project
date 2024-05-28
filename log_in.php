@@ -60,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 </head>
 
 <body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-4">Log In</h1>
+    <div class="container mx-auto px-4 mt-8 py-8">
+        <h1 class="text-3xl font-bold mt-8 mb-4">Log In</h1>
 
-        <form method="post" class="max-w-md mx-auto">
+        <form method="post" class="max-w-md mx-auto mt-8">
             <div class="mb-4">
                 <label for="email" class="block mb-2">Email:</label>
                 <input value="<?php echo $email ?>" type="email" id="email" name="email" required
@@ -73,15 +73,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <div class="mb-4">
                 <label for="password" class="block mb-2">Password:</label>
                 <input value="<?php echo $password ?>" type="password" id="password" name="password" required
-                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-customBlue-500">
             </div>
 
             <button id="login"
-                class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Log
-                In</button>
+                class="w-full bg-customBlue-500 text-white py-2 px-4 rounded-lg hover:bg-customBlue-600 transition duration-200">Intra in cont</button>
 
             <a href="sign_up.php"
-                class="block text-center mt-4 text-blue-500 hover:text-blue-700">Create an Account</a>
+                class="block text-center mt-4 text-customBlue-500 hover:text-customBlue-700">Nu ai cont? Creaza unul acum</a>
         </form>
     </div>
 </body>

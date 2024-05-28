@@ -89,16 +89,32 @@ $comments = $db->read($query, $params);
 </head>
 
 <body>
-    <header class="bg-blue-500 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">ImobPlus</h1>
-            <nav>
-                <ul class="list-none flex space-x-8">
-                    <li><button onclick="history.back()">Inapoi</button></li>
-                    <li><a href="contact.php" class="hover:shadow-lg">Contact</a></li>
-                </ul>
-            </nav>
+    <header>
+    <nav class="bg-red-600 border-gray-200">
+        <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
+            <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="./logo.png" class="h-8" alt="Logo" />
+            <span class="text-2xl font-semibold text-white">Buna, <?php echo htmlspecialchars($user_data['first_name'])?>!</span>
+            </a>
+            <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center rounded-lg md:hidden" aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Meniu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+            </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-red-600 relative">
+                <li>
+                <a href="agent_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
+                </li>
+                <li>
+                <a href="#" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contact</a>
+                </li>
+            </ul>
+            </div>
         </div>
+    </nav>
+
     </header>
 
     <main class="container mx-auto py-8">
@@ -155,11 +171,11 @@ $comments = $db->read($query, $params);
                             <input type="file" id="image2" name="image2" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500">
                         </div>
                         <div class="flex justify-between">
-                            <button type="submit" name="update_property" class="bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700">Actualizează</button>
+                            <button type="submit" name="update_property" class="bg-green-500 text-white px-4 py-2 rounded-md font-bold hover:bg-green-700">Actualizează</button>
                         </div>
                     </form>
                     <form id="delete-form" action="update_property.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post">
-                        <button type="submit" name="delete_property" class="bg-gray-500 text-white px-4 py-2 rounded-md font-bold hover:bg-gray-700 mt-4" onclick="confirmDelete(event)">Șterge</button>
+                        <button type="submit" name="delete_property" class="bg-red-500 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 mt-4" onclick="confirmDelete(event)">Șterge</button>
                     </form>
                 </div>
                 <div class="comments-section bg-white rounded-lg shadow-md p-4">

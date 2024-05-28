@@ -28,48 +28,66 @@ if ($properties === false) {
   <link rel="stylesheet" href="output.css">
 </head>
 <body>
-  <header class="bg-blue-500 shadow-sm p-4">
+<header class="bg-blue-500 shadow-sm p-4">
     <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold">Ravic</h1>
-      <nav>
-        <ul class="list-none flex space-x-8">
-          <li><a href="properties.php" class="hover:shadow-lg">Proprietati</a></li>
-          <li><a href="contact.php" class="hover:shadow-lg">Contact</a></li>
-          <li><a href="about.php" class="hover:shadow-lg">Despre noi</a></li>
-          <li><a href="log_in.php" class="font-bold hover:shadow-lg">Intra in cont</a></li>
-          <li><a href="sign_up.php" class="font-bold hover:shadow-lg">Cont nou</a></li>
-          <li><a href="log_out.php" class="font-bold hover:shadow-lg">Delete Session</a></li>
-        </ul>
-      </nav>
+        <h1 class="text-xl font-bold">ImbobPlus</h1>
+        <nav class="bg-red-600 fixed w-full z-20 top-0 start-0 border-b">
+            <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="log_in.php" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <img src="./logo.png" class="h-8">
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">ImobPlus</span>
+                </a>
+                <div class="flex md:order-2 space-x-3 md:space-x-4 rtl:space-x-reverse">
+                    <button type="button" class="text-white bg-customOrange-500 hover:bg-customOrange-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center" onclick="window.location.href='log_in.php'">Intra in cont</button>
+                    <button type="button" class="text-white bg-customOrange-500 hover:bg-customOrange-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center" onclick="window.location.href='sign_up.php'">Cont nou</button>
+                    <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+                        <span class="sr-only">Meniu</span>
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="items-center justify-center hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                    <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border rounded-lg bg-red-600 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-red-600">
+                        <li>
+                            <a href="#" class="block py-2 px-3 text-white rounded md:hover:text-gray-900 md:p-0">Contact</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 px-3 text-white rounded md:hover:text-gray-900 md:p-0">About</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 px-3 text-white rounded md:hover:text-gray-900 md:p-0">Services</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
-  </header>
+</header>
+
 
   <main class="container mx-auto py-12">
     <section class="hero p-12 text-center bg-gray-100 rounded-lg shadow-md">
       <h1 class="text-3xl font-bold mb-4">Gaseste-ti casa de vis</h1>
       <p class="text-xl mb-8">Cauta in lista noastra extinsa si gaseste proprietatea perfecta pentru tine.</p>
-      <section class="search-bar flex justify-center items-center mb-8">
-        <input type="text" placeholder="Cauta o proprietate dupa locatie sau ID" class="w-1/2 px-4 py-2 border rounded-l-lg focus:outline-none focus:border-blue-500">
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700">Cauta</button>
-      </section>
     </section>
 
     <section class="featured-properties py-12">
-      <h2 class="text-2xl font-bold text-center mb-8">Toate proprietatile</h2>
+      <h2 class="text-2xl font-bold text-center mb-8">Proprietati promovate</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <?php if ($properties): ?>
-          <?php foreach ($properties as $property): ?>
-            <div class="property-card bg-white rounded-lg shadow-md p-4">
-              <img src="<?php echo htmlspecialchars($property['image']); ?>" alt="Property Image" class="w-full h-48 object-cover rounded-t-lg">
-              <h3 class="text-xl font-bold p-2"><?php echo htmlspecialchars($property['title']); ?></h3>
-              <p class="text-gray-600 p-2"><?php echo htmlspecialchars($property['location']); ?></p>
-              <a href="detalii_proprietate.php?id=<?php echo htmlspecialchars($property['propertyid']); ?>" class="bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700">Vezi Detalii</a>
-            </div>
-          <?php endforeach; ?>
-        <?php else: ?>
-          <p class="text-center">Nu s-au găsit proprietăți recomandate.</p>
-        <?php endif; ?>
-      </div>
+            <?php if ($properties): ?>
+              <?php foreach ($properties as $property): ?>
+                <div class="property-card bg-white rounded-lg shadow-md p-4">
+                  <img src="<?php echo htmlspecialchars($property['image']); ?>" alt="Property Image" class="w-full h-48 object-cover rounded-t-lg">
+                  <h3 class="text-xl font-bold p-2"><?php echo htmlspecialchars($property['title']); ?></h3>
+                  <p class="text-gray-600 p-2"><?php echo htmlspecialchars($property['location']); ?></p>
+                  <a href="detalii_proprietate.php?id=<?php echo htmlspecialchars($property['propertyid']); ?>" class="block text-center mt-4 bg-customBlue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-customBlue-700">Vezi Detalii</a>
+                </div>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <p class="text-center">Nu s-au găsit proprietăți recomandate.</p>
+            <?php endif; ?>
+          </div>
     </section>
 
     <footer class="text-center p-4 bg-gray-200">

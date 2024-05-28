@@ -33,33 +33,61 @@ $username = $user_data['first_name'];
 </head>
 
 <body>
-    <header class="bg-blue-500 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold"><?php echo "Bine ai venit, " . htmlspecialchars($user_data['first_name']) . "!"; ?></h1>
-            <nav>
-                <ul class="list-none flex space-x-8">
-                    <li><a href="agent_dashboard.php" class="hover:shadow-lg">Contul meu</a></li>
-                    <li><a href="#" class="hover:shadow-lg">Contact</a></li>
-                    <li><a href="log_out.php" class="font-bold hover:shadow-lg">Deconecteaza-te</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <header>
+    <nav class="bg-red-600 border-gray-200">
+  <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
+    <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="./logo.png" class="h-8" alt="Logo" />
+      <span class="text-2xl font-semibold text-white">ImobPlus</span>
+    </a>
+    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center rounded-lg md:hidden" aria-controls="navbar-default" aria-expanded="false">
+      <span class="sr-only">Meniu</span>
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+      </svg>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul class="flex flex-col py-2 px-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-red-600">
+        <li>
+          <a href="agent_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contul Meu</a>
+        </li>
+        <li>
+          <a href="#" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contact</a>
+        </li>
+        <li>
+          <a href="log_out.php" class="block font-bold py-1 px-2 text-white rounded md:bg-transparent hover:md:text-gray-900 hover:shadow-md md:p-0" aria-current="page">Deconecteaza-te</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+</header>
 
     <main class="container mx-auto py-12">
+        
         <section class="search-bar flex flex-col items-center mb-8">
             <p class="text-xl font-bold mb-4">Cauta o proprietate</p>
+
+            <!-- required for JS script -->
             <form id="search-form" class="flex w-full">
-                <input type="text" placeholder="Cauta o proprietate dupa locatie sau ID" class="w-1/2 px-4 py-2 border rounded-l-lg focus:outline-none focus:border-blue-500">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700">Cauta</button>
+                <input type="text" placeholder="Cauta o proprietate dupa titlu sau locatie" class="w-full px-4 py-2 border rounded-l-lg focus:outline-none focus:border-customBlue-500">
+                <button class="bg-customBlue-500 text-white px-4 py-2 rounded-r-lg hover:bg-customBlue-700">Cauta</button>
             </form>
+            <!-- required for JS script - end -->
+
         </section>
 
         <section class="property-listings">
-            <h2 class="text-2xl font-bold text-center mb-8">Proprietati recomandate</h2>
+            <h2 class="text-2xl font-bold text-center mb-8">Toate Proprietatile</h2>
+
+            <!-- required for JS script - start -->
             <div id="card-container" class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <p id="no-data" class="text-center hidden">Nu s-au găsit proprietăți recomandate.</p>
+                <p id="no-data" class="text-center hidden">Nu s-au găsit proprietăți.</p>
             </div>
+            <!-- required for JS script - end -->
+
         </section>
     </main>
 
@@ -70,75 +98,6 @@ $username = $user_data['first_name'];
 </body>
 
 </html>
-
 <script>
-    function createCardNode(card) {
-        const wrapperDiv = document.createElement('div');
-        wrapperDiv.className = "bg-white rounded-lg shadow-md p-4";
-        
-        const imageEl = document.createElement('img');
-        imageEl.src = card.image;
-        imageEl.className = "w-full h-48 object-cover rounded-t-lg";
-
-        const titleEl = document.createElement('h3');
-        titleEl.textContent = card.title;
-        titleEl.className = "text-xl font-bold mt-4 mb-2";
-        
-        const LocatieEl = document.createElement('p');
-        LocatieEl.innerText = `Locatie: ${card.location}`;
-        LocatieEl.className = "text-gray-600";
-
-        const priceEl = document.createElement('p');
-        priceEl.innerText = `Pret: ${card.price}`;
-        priceEl.className = "text-gray-600";
-
-        const roomsEl = document.createElement('p');
-        roomsEl.innerText = `Camere: ${card.rooms}`;
-        roomsEl.className = "text-gray-600";
-
-        const bathroomsEl = document.createElement('p');
-        bathroomsEl.innerText = `Bai: ${card.bathrooms}`;
-        bathroomsEl.className = "text-gray-600 mb-4";
-
-        const detailsLink = document.createElement('a');
-        detailsLink.className = "bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700";
-        detailsLink.innerText = "Detalii";
-        detailsLink.href = `property_details.php?id=${card.propertyid}`;
-
-        wrapperDiv.append(imageEl, titleEl, LocatieEl, priceEl, roomsEl, bathroomsEl, detailsLink);
-
-        return wrapperDiv;
-    }
-
-    async function loadApartmentCards(search = '') {
-        const cardContainer = document.querySelector('#card-container');
-        
-        // clear the old items
-        cardContainer.innerHTML = '';
-    
-        // display loading
-        
-        const res = await fetch(`/ImobPlus/api/properties.php?q=${search}`);
-        const data = await res.json();
-        
-        // hide loading
-
-        if (data?.length === 0) {
-            document.querySelector('#no-data').classList.toggle('hidden');
-            return;    
-        }
-
-        // display elements
-        data?.forEach(apartment => {
-            const cardEl = createCardNode(apartment);
-            cardContainer.append(cardEl);
-        });
-    }
-
-    document.getElementById('search-form').onsubmit = (event) => {
-        event.preventDefault();
-        loadApartmentCards(event.target[0].value);
-    }
-
-    window.onload = () => loadApartmentCards();
+    <?php require("property_search.js");?>
 </script>
