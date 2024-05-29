@@ -41,7 +41,7 @@ class User
         $params = [$first_name, $last_name, $email, $password, $number, $current_data['id']];
 
         $result = $db->save($query, $params);
-        if($result){
+        if($result === true){
             return true;
         } else {
             return false;

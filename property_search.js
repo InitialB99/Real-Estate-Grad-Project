@@ -1,3 +1,5 @@
+const savedPropertiesIds = <?php echo json_encode($savedPropertiesIds); ?>;
+    console.log('Saved Properties IDs:', savedPropertiesIds);
 
     function createCardNode(card) {
         const wrapperDiv = document.createElement('div');
@@ -10,6 +12,10 @@
         const titleEl = document.createElement('h3');
         titleEl.textContent = card.title;
         titleEl.className = "text-xl font-bold mt-4 mb-2";
+        
+        const typeEl = document.createElement('p');
+        typeEl.innerText = `${card.listing_type}`;
+        typeEl.className = "text-gray-600 font-bold";
         
         const LocatieEl = document.createElement('p');
         LocatieEl.innerText = `Locatie: ${card.location}`;
@@ -27,12 +33,44 @@
         bathroomsEl.innerText = `Bai: ${card.bathrooms}`;
         bathroomsEl.className = "text-gray-600 mb-4";
 
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.className = "flex justify-between mt-4";
+
         const detailsLink = document.createElement('a');
-        detailsLink.className = "block mt-4 text-center bg-customBlue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-customBlue-700";
+        detailsLink.className = "bg-customBlue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-customBlue-700";
         detailsLink.innerText = "Detalii";
         detailsLink.href = `property_details.php?id=${card.propertyid}`;
 
-        wrapperDiv.append(imageEl, titleEl, LocatieEl, priceEl, roomsEl, bathroomsEl, detailsLink);
+        // Create form element
+        const form = document.createElement('form');
+        form.setAttribute('action', 'user_home.php');
+        form.setAttribute('method', 'post');
+
+        // Create hidden input element
+        const hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'property_id');
+        hiddenInput.setAttribute('value', card.propertyid);
+
+        // Create button element
+        const button = document.createElement('button');
+        button.setAttribute('type', 'submit');
+        if (savedPropertiesIds.includes(card.propertyid)) {
+            button.setAttribute('name', 'unsave_property');
+            button.classList.add('bg-customOrange-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-customOrange-700');
+            button.textContent = 'Salvat';
+        } else {
+            button.setAttribute('name', 'save_property');
+            button.classList.add('bg-green-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-green-700');
+            button.textContent = 'Salveaza';
+        }
+
+        // Append hidden input and button to form
+        form.appendChild(hiddenInput);
+        form.appendChild(button);
+
+        buttonsContainer.append(detailsLink, form);
+        wrapperDiv.append(imageEl, titleEl, typeEl, LocatieEl, priceEl, roomsEl, bathroomsEl, buttonsContainer);
 
         return wrapperDiv;
     }
@@ -49,6 +87,7 @@
         const data = await res.json();
         
         // hide loading
+        console.log('Fetched Properties:', data); // Debugging output
 
         if (data?.length === 0) {
             document.querySelector('#no-data').classList.toggle('hidden');

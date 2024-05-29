@@ -35,18 +35,35 @@ $saved_properties = $db->read($query, $params);
     <link rel="stylesheet" href="output.css">
 </head>
 <body class="bg-gray-100">
-    <header class="bg-blue-500 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">Contul Meu - <?php echo htmlspecialchars($user_data['first_name'] . ' ' . $user_data['last_name']); ?></h1>
-            <nav>
-                <ul class="list-none flex space-x-8">
-                    <li><a href="user_home.php" class="hover:shadow-lg">Acasa</a></li>
-                    <li><a href="update_user.php" class="hover:shadow-lg">Actualizeaza informatiile</a></li>
-                    <li><a href="log_out.php" class="font-bold hover:shadow-lg">Deconecteaza-te</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<header>
+  <nav class="bg-customOrange-500 border-gray-200">
+    <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
+      <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="./logo.png" class="h-8" alt="Logo" />
+        <span class="text-2xl font-semibold text-white">Buna, <?php echo htmlspecialchars($user_data['first_name'])?>!</span>
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center rounded-lg md:hidden" aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Meniu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul class="flex flex-col px-8 py-2 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500">
+          <li>
+            <a href="agent_home.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Acasa</a>
+          </li>
+          <li>
+            <a href="update_user.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Datele mele</a>
+          </li>
+          <li>
+            <a href="log_out.php" class="block font-bold text-white rounded md:bg-transparent hover:md:text-gray-900 hover:shadow-md md:p-0" aria-current="page">Deconecteaza-te</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
 
     <main class="container mx-auto py-8">
         <section class="p-12 bg-white rounded-lg shadow-md">
@@ -63,7 +80,7 @@ $saved_properties = $db->read($query, $params);
                             <p class="text-gray-700">Pret: $<?php echo htmlspecialchars($property['price']); ?></p>
                             <p class="text-gray-700">Camere: <?php echo htmlspecialchars($property['rooms']); ?></p>
                             <p class="text-gray-700">Bai: <?php echo htmlspecialchars($property['bathrooms']); ?></p>
-                            <a href="detalii_proprietate.php?id=<?php echo htmlspecialchars($property['propertyid']); ?>" class="block mt-4 bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700">Detalii</a>
+                            <a href="property_details.php?id=<?php echo htmlspecialchars($property['propertyid']); ?>" class="block mt-4 bg-customBlue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-customBlue-700">Detalii</a>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>

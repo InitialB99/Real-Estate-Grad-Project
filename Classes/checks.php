@@ -9,10 +9,6 @@ class Checks
     private function check_user($id, $access_level)
     {
 
-        if (!isset($id) || !is_numeric($id)){
-            $this->error .= 'No sessionid!';
-        }
-
         $user = new User();
         $user_data = $user->get_data($id);
 
@@ -45,4 +41,27 @@ class Checks
 
         return $this->check_user($id, 1);
     }
+    
+    public function check_admin($id) {
+        $user = new User();
+        $user_data = $user->get_data($id);
+
+        if(!$user_data)
+        {
+            $this->error = 'No data!';
+        }
+                
+        if($user_data['id'] !== 1)
+        {
+            $this->error .= 'Not admin!';
+        }
+
+        if ($this->error == "") {
+            // no error
+            return $user_data;
+        }else {
+            return false;
+        }
+    }
+    
 }

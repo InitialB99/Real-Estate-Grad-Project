@@ -17,7 +17,7 @@ if (isset($_SESSION['realestate_sessionid']) && is_numeric($_SESSION['realestate
         $user_data = $checks->check_agent($id);
 
     if($user_data){
-        header("Location: agent_home.php"); // Goes to agent page
+        header("Location: agent_dashboard.php"); // Goes to agent page
         exit();
     } else {
         header("Location: user_home.php"); // Goes to client page
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 <body class="bg-gray-100">
     <div class="container mx-auto px-4 mt-8 py-8">
-        <h1 class="text-3xl font-bold mt-8 mb-4">Log In</h1>
+        <h1 class="text-3xl font-bold mt-8 mb-4 flex justify-center">Log In</h1>
 
         <form method="post" class="max-w-md mx-auto mt-8">
             <div class="mb-4">
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             </div>
 
             <button id="login"
-                class="w-full bg-customBlue-500 text-white py-2 px-4 rounded-lg hover:bg-customBlue-600 transition duration-200">Intra in cont</button>
+                class="w-full bg-customOrange-500 text-white py-2 px-4 rounded-lg hover:bg-customOrange-600 transition duration-200">Intra in cont</button>
 
             <a href="sign_up.php"
                 class="block text-center mt-4 text-customBlue-500 hover:text-customBlue-700">Nu ai cont? Creaza unul acum</a>

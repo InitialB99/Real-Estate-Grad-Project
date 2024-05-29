@@ -25,7 +25,7 @@ if(empty($propertyid)){
     die('Property ID is missing.');
 }
 
-//TAKES USER ID and NAME
+//TAKES USER ID
 $userid = $user_data['id'];
 
 //TAKES PROPERTY DATA
@@ -36,6 +36,12 @@ if(!$property){
     die('Property not found.');
 }
 
+//DEBUGGING
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";
+}
 
 // UPDATE PROPERTY
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_property'])) {
@@ -58,7 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_property'])) {
         header("Location: agent_dashboard.php");
         exit();
     } else {
-        echo "Failed to delete property.";
+        echo "<div class='text-center text-sm text-white bg-gray-700 rounded-lg p-4'>";
+        echo "The following errors occurred: <br><br>";
+        echo $result;
+        echo "</div>";
     }
 }
 
@@ -82,15 +91,18 @@ $comments = $db->read($query, $params);
         event.preventDefault(); // Prevent the form from submitting immediately
         const userConfirmed = confirm("Esti sigur ca vrei sa stergi aceasta proprietate?");
         if (userConfirmed) {
-            document.getElementById('delete-form').submit(); // Submit the form if the user confirmed
+            console.log("User confirmed deletion");
+            event.target.closest('form').submit(); // Submit the form if the user confirmed
+        } else {
+            console.log("User canceled deletion");
         }
     }
-    </script>
+</script>
 </head>
 
 <body>
     <header>
-    <nav class="bg-red-600 border-gray-200">
+    <nav class="bg-customOrange-500 border-gray-200">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
             <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="./logo.png" class="h-8" alt="Logo" />
@@ -103,7 +115,7 @@ $comments = $db->read($query, $params);
             </svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-red-600 relative">
+            <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500 relative">
                 <li>
                 <a href="agent_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
                 </li>
@@ -124,7 +136,7 @@ $comments = $db->read($query, $params);
                 <div class="swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="<?php echo htmlspecialchars($property['image']); ?>" alt="Property Image 1" class="w-auto h-auto object-cover rounded-lg">
+                            <img src="<?php echo htmlspecialchars($property['image']); ?>" alt="Property Image 1" class="w-auto h-auto object-cover mb-2 rounded-lg">
                         </div>
                         <div class="swiper-slide">
                             <img src="<?php echo htmlspecialchars($property['image2']); ?>" alt="Property Image 2" class="w-full h-auto object-cover rounded-lg">
@@ -138,6 +150,16 @@ $comments = $db->read($query, $params);
                 <div class="bg-white rounded-lg shadow-md p-4">
                     <h3 class="text-xl font-bold mb-2">Editează Proprietatea</h3>
                     <form action="update_property.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post" enctype="multipart/form-data">
+                        <div>
+                            <label for="listing_type" class="block text-lg font-medium">Tip ofertă:</label>
+                            <select name="listing_type" id="listing_type" class="appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:border-customOrange-500 focus:bg-white focus:text-gray-700" required>
+                                <option value="De inchiriat" <?php echo $property['listing_type'] == 'De inchiriat' ? 'selected' : ''; ?>>De închiriat</option>
+                                <option value="De vanzare" <?php echo $property['listing_type'] == 'De vanzare' ? 'selected' : ''; ?>>De vânzare</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.516 7.548a.713.713 0 00-.394 1.048L9.606 15.45c.3.495.997.495 1.296 0l4.484-6.854a.713.713 0 00-.393-1.048l-9.477-.02z"/></svg>
+                            </div>
+                        </div>
                         <div class="mb-4">
                             <label for="title" class="block text-gray-700">Titlu:</label>
                             <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($property['title']); ?>" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500">
@@ -175,7 +197,8 @@ $comments = $db->read($query, $params);
                         </div>
                     </form>
                     <form id="delete-form" action="update_property.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post">
-                        <button type="submit" name="delete_property" class="bg-red-500 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 mt-4" onclick="confirmDelete(event)">Șterge</button>
+                    <input type="hidden" name="delete_property" value="<?php echo htmlspecialchars($propertyid); ?>">
+                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 mt-4" onclick="confirmDelete(event)">Șterge</button>
                     </form>
                 </div>
                 <div class="comments-section bg-white rounded-lg shadow-md p-4">

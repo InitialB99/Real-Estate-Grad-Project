@@ -12,8 +12,8 @@ $query_title = isset($_GET['q']) ? $_GET['q'] : '';
 
 $params = [];
 if (!empty($query_title)) {
-    $query = "SELECT * FROM properties WHERE title LIKE ? OR propertyid LIKE ? OR description LIKE ? OR location LIKE ? LIMIT 1000";
-    $params = ['%' . $query_title . '%', '%' . $query_title . '%', '%' . $query_title . '%', '%' . $query_title . '%'];
+    $query = "SELECT * FROM properties WHERE title LIKE ? OR listing_type LIKE ? OR rooms LIKE ? OR description LIKE ? OR location LIKE ? LIMIT 1000";
+    $params = ['%' . $query_title . '%', '%' . $query_title . '%', '%' . $query_title . '%', '%' . $query_title . '%', '%' . $query_title . '%'];
 } else {
     $query = "SELECT * FROM properties LIMIT 1000";
 }

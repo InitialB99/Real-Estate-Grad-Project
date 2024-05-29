@@ -43,7 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $price = $_POST['price'];
     $rooms = $_POST['rooms'];
     $bathrooms = $_POST['bathrooms'];
+    $listing_type = $_POST['listing_type'];
     $file = $_FILES['image'];
+    $file = $_FILES['image2'];
 }
 
 ?>
@@ -58,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body class="bg-gray-100">
     <header>
-    <nav class="bg-red-600 border-gray-200">
+    <nav class="bg-customOrange-500 border-gray-200">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
             <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="./logo.png" class="h-8" alt="Logo" />
@@ -71,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-red-600 relative">
+            <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500 relative">
                 <li>
                 <a href="agent_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
                 </li>
@@ -87,42 +89,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <main class="container mx-auto py-12">
         <section class="p-12 bg-white rounded-lg shadow-md">
-            <h1 class="text-3xl font-bold mb-4 text-center">Upload Property Image</h1>
+            <h1 class="text-3xl font-bold mb-4 text-center">Incarca o noua proprietate!</h1>
             <form method="post" enctype="multipart/form-data" class="space-y-4">
                 <div>
-                    <label for="title" class="block text-lg font-medium">Property Title</label>
+                    <label for="listing_type" class="block text-lg font-medium">Tip ofertă</label>
+                    <select name="listing_type" id="listing_type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                        <option value="De inchiriat">De închiriat</option>
+                        <option value="De vanzare">De vânzare</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="title" class="block text-lg font-medium">Titlu</label>
                     <input type="text" value="<?php echo $title ?>" name="title" id="title" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
                 </div>
                 <div>
-                    <label for="description" class="block text-lg font-medium">Description</label>
+                    <label for="description" class="block text-lg font-medium">Descriere</label>
                     <textarea name="description" value="<?php echo $description ?>" id="description" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required></textarea>
                 </div>
                 <div>
-                    <label for="location" class="block text-lg font-medium">Location</label>
+                    <label for="location" class="block text-lg font-medium">Locatie</label>
                     <input type="text" name="location" value="<?php echo $location ?>" id="location" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
                 </div>
                 <div>
-                    <label for="price" class="block text-lg font-medium">Price</label>
+                    <label for="price" class="block text-lg font-medium">Pret</label>
                     <input type="number" name="price" value="<?php echo $price ?>" id="price" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
                 </div>
                 <div>
-                    <label for="rooms" class="block text-lg font-medium">Rooms</label>
+                    <label for="rooms" class="block text-lg font-medium">Camere</label>
                     <input type="number" name="rooms" value="<?php echo $rooms ?>" id="rooms" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
                 </div>
                 <div>
-                    <label for="bathrooms" class="block text-lg font-medium">Bathrooms</label>
+                    <label for="bathrooms" class="block text-lg font-medium">Bai</label>
                     <input type="number" name="bathrooms" value="<?php echo $bathrooms ?>" id="bathrooms" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
                 </div>
                 <div>
-                    <label for="image" class="block text-lg font-medium">Upload Image</label>
+                    <label for="image" class="block text-lg font-medium">Incarca Imagine</label>
                     <input type="file" name="image" id="image" class="w-full px-4 py-4 border rounded-lg focus:outline-none focus:border-customBlue-500" accept="image/*" required>
                 </div>
                 <div>
-                    <label for="image2" class="block text-lg font-medium">Upload Image 2</label>
+                    <label for="image2" class="block text-lg font-medium">Incarca Imagine 2</label>
                     <input type="file" name="image2" id="image2" class="w-full px-4 py-4 border rounded-lg focus:outline-none focus:border-customBlue-500" accept="image/*" required>
                 </div>
                 <input type="hidden" name="agentid" value="<?php echo $user_data['id']; ?>">
-                <button type="submit" class="w-full bg-green-500 text-white px-4 py-4 rounded-lg font-bold hover:bg-green-700">Upload</button>
+                <button type="submit" class="w-full bg-green-500 text-white px-4 py-4 rounded-lg font-bold hover:bg-green-700">Salveaza</button>
             </form>
         </section>
     </main>

@@ -48,6 +48,7 @@ class manageProperty
         $db = new Database();
         $error = "";
 
+        $listing_type = $post_data['listing_type'];
         $title = $post_data['title'];
         $location = $post_data['location'];
         $price = $post_data['price'];
@@ -55,8 +56,8 @@ class manageProperty
         $bathrooms = $post_data['bathrooms'];
         $description = $post_data['description'];
 
-        $query = "UPDATE properties SET title = ?, location = ?, price = ?, rooms = ?, bathrooms = ?, description = ? WHERE propertyid = ? AND agentid = ?";
-        $params = [$title, $location, $price, $rooms, $bathrooms, $description, $propertyid, $userid];
+        $query = "UPDATE properties SET listing_type = ?, title = ?, location = ?, price = ?, rooms = ?, bathrooms = ?, description = ? WHERE propertyid = ? AND agentid = ?";
+        $params = [$listing_type, $title, $location, $price, $rooms, $bathrooms, $description, $propertyid, $userid];
 
         if (!empty($files_data['image']['name'])) {
             $target_dir = "uploads/";

@@ -85,11 +85,12 @@ class Upload
             $price = $post_data["price"];
             $rooms = $post_data["rooms"];
             $bathrooms = $post_data["bathrooms"];
+            $listing_type = $post_data["listing_type"];
             $imagePath = $this->target_file;
             $imagePath2 = $this->target_file2;
 
-            $query = "insert into properties (agentid, title, description, location, price, rooms, bathrooms, image, image2, featured) VALUES (?,?,?,?,?,?,?,?,?,?)";
-            $params = [$agentid, $title, $description, $location, $price, $rooms, $bathrooms, $imagePath, $imagePath2, 0];
+            $query = "insert into properties (agentid, title, description, location, price, rooms, bathrooms, listing_type, image, image2, featured) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            $params = [$agentid, $title, $description, $location, $price, $rooms, $bathrooms, $listing_type, $imagePath, $imagePath2, 0];
 
             $DB = new Database();
             $DB->save($query, $params);
