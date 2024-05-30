@@ -17,7 +17,7 @@ class Checks
             $this->error = 'No data!';
         }
                 
-        if($user_data['access'] !== $access_level)
+        if($user_data['access'] !== $access_level && $user_data['access'] !== 2)
         {
             $this->error .= 'Wrong access!';
         }
@@ -43,25 +43,8 @@ class Checks
     }
     
     public function check_admin($id) {
-        $user = new User();
-        $user_data = $user->get_data($id);
-
-        if(!$user_data)
-        {
-            $this->error = 'No data!';
-        }
-                
-        if($user_data['id'] !== 1)
-        {
-            $this->error .= 'Not admin!';
-        }
-
-        if ($this->error == "") {
-            // no error
-            return $user_data;
-        }else {
-            return false;
-        }
+        
+        return $this->check_user($id, 2);
     }
     
 }

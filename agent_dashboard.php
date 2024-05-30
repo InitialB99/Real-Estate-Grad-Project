@@ -47,7 +47,7 @@ $properties = $db->read($query, $params);
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul class="flex flex-col px-8 py-2 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500">
           <li>
-            <a href="admin.php" class="block text-customOrange-500">Admin</a>
+            <a href="admin.php" class="block">Admin</a>
           </li>
           <li>
             <a href="agent_home.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Acasa</a>
@@ -89,7 +89,7 @@ $properties = $db->read($query, $params);
                               <h3 class="text-lg font-bold mb-2"><?php echo htmlspecialchars($property['title']); ?></h3>
                               <p class="text-gray-700 font-bold"><?php echo htmlspecialchars($property['listing_type']); ?></p>
                               <p class="text-gray-700">Locatie: <?php echo htmlspecialchars($property['location']); ?></p>
-                              <p class="text-gray-700">Pret: $<?php echo htmlspecialchars($property['price']); ?></p>
+                              <p class="text-gray-700">Pret: <?php echo htmlspecialchars($property['price']); ?>€<?php if($property['listing_type'] == "De inchiriat"): echo "/pe luna"?><?php endif ?></p>
                               <p class="text-gray-700">Camere: <?php echo htmlspecialchars($property['rooms']); ?></p>
                               <p class="text-gray-700">Bai: <?php echo htmlspecialchars($property['bathrooms']); ?></p>
                               <a href="update_property.php?id=<?php echo htmlspecialchars($property['propertyid']); ?>" class="block text-center mt-4 bg-customBlue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-customBlue-700">Editeaza</a>

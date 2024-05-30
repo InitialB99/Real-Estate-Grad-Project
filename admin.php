@@ -9,24 +9,30 @@ $check = new Checks();
 
 // Check if the user is an admin
 $id = $_SESSION['realestate_sessionid'];
-$user_data = $check->check_admin($id); // Implement check_admin method to verify admin access
+$user_data = $check->check_admin($id);
 if (!$user_data) {
     header("Location: log_in.php");
     die;
 }
 
 // Fetch all users
-$users = $db->read("SELECT id, first_name, access FROM users where id <> 1");
+$query = "SELECT id, first_name, access FROM users where id <> ?";
+$params = [$user_data['id']];
+$users = $db->read($query,$params);
 
 // Fetch all properties
-$properties = $db->read("SELECT propertyid, title, featured FROM properties");
+$query = "SELECT propertyid, title, featured FROM properties";
+$properties = $db->read($query);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Update user access
     if (isset($_POST['update_access'])) {
         $user_id = $_POST['user_id'];
         $access_level = $_POST['access_level'];
-        $db->save("UPDATE users SET access = ? WHERE id = ?", [$access_level, $user_id]);
+
+        $query = "UPDATE users SET access = ? WHERE id = ?";
+        $params = [$access_level, $user_id];
+        $db->save($query, $params);
     }
 
     // Update property featured status
@@ -67,6 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul class="flex flex-col py-2 px-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500">
                         <li>
+                            <a href="reports.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Rapoarte</a>
+                        </li>
+                        <li>
                             <a href="agent_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
                         </li>
                         <li>
@@ -103,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <select name="access_level">
                                     <option value="0" <?php if ($user['access'] == 0) echo 'selected'; ?>>User</option>
                                     <option value="1" <?php if ($user['access'] == 1) echo 'selected'; ?>>Agent</option>
+                                    <option value="2" <?php if ($user['access'] == 2) echo 'selected'; ?>>Admin</option>
                                 </select>
                                 <button type="submit" name="update_access" class="bg-customBlue-500 text-white px-2 py-1 rounded">Update</button>
                             </form>

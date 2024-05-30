@@ -77,7 +77,7 @@ $saved_properties = $db->read($query, $params);
                             <h4 class="text-lg font-bold mb-2"><?php echo htmlspecialchars($property['title']); ?></h4>
                             <p class="text-gray-700"><?php echo htmlspecialchars($property['description']); ?></p>
                             <p class="text-gray-700">Locatie: <?php echo htmlspecialchars($property['location']); ?></p>
-                            <p class="text-gray-700">Pret: $<?php echo htmlspecialchars($property['price']); ?></p>
+                            <p class="text-gray-700">Pret: <?php echo htmlspecialchars($property['price']); ?>€<?php if($property['listing_type'] == "De inchiriat"): echo "/pe luna"?><?php endif ?></p>
                             <p class="text-gray-700">Camere: <?php echo htmlspecialchars($property['rooms']); ?></p>
                             <p class="text-gray-700">Bai: <?php echo htmlspecialchars($property['bathrooms']); ?></p>
                             <a href="property_details.php?id=<?php echo htmlspecialchars($property['propertyid']); ?>" class="block mt-4 bg-customBlue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-customBlue-700">Detalii</a>

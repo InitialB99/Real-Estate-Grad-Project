@@ -169,7 +169,7 @@ $comments = $db->read($query, $params);
                             <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($property['location']); ?>" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500">
                         </div>
                         <div class="mb-4">
-                            <label for="price" class="block text-gray-700">Preț:</label>
+                            <label for="price" class="block text-gray-700">Suma in Euro:</label>
                             <input type="text" id="price" name="price" value="<?php echo htmlspecialchars($property['price']); ?>" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500">
                         </div>
                         <div class="mb-4">

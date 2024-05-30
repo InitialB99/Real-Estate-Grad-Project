@@ -22,7 +22,7 @@ const savedPropertiesIds = <?php echo json_encode($savedPropertiesIds); ?>;
         LocatieEl.className = "text-gray-600";
 
         const priceEl = document.createElement('p');
-        priceEl.innerText = `Pret: ${card.price}`;
+        priceEl.innerText = `Pret: ${card.price}€${card.listing_type === "De inchiriat" ? "/pe luna" : ""}`;
         priceEl.className = "text-gray-600";
 
         const roomsEl = document.createElement('p');
