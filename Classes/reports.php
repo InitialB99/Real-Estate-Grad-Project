@@ -26,4 +26,9 @@ class Report {
         return $this->db->read($query, $params);
     }
 
+    public function getPropertiesByType($type) {
+        $query = "SELECT * FROM properties WHERE listing_type LIKE ?";
+        $params = [$type];
+        return $this->db->read($query, $params);
+    }
 }

@@ -16,18 +16,27 @@ if (!$user_data) {
 
 $report = new Report();
 $properties = [];
+$totalProperties = 0;
+$selectedType = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['agent_filter'])) {
         $agentId = $_POST['agent_id'];
         $properties = $report->getPropertiesByAgent($agentId);
+        $totalProperties = count($properties);
     } elseif (isset($_POST['price_range'])) {
         $minPrice = $_POST['min_price'];
         $maxPrice = $_POST['max_price'];
         $properties = $report->getPropertiesByPriceRange($minPrice, $maxPrice);
+        $totalProperties = count($properties);
     } elseif (isset($_POST['location_filter'])) {
         $location = $_POST['location'];
         $properties = $report->getPropertiesByLocation($location);
+        $totalProperties = count($properties);
+    } elseif (isset($_POST['type_filter'])) {
+        $selectedType = $_POST['type'];
+        $properties = $report->getPropertiesByType($selectedType);
+        $totalProperties = count($properties);
     } 
 }
 ?>
@@ -84,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <li><button class="report-btn text-left w-full bg-blue-500 text-white px-4 py-2 rounded" data-target="agent-form">Raport Agent</button></li>
                 <li><button class="report-btn text-left w-full bg-blue-500 text-white px-4 py-2 rounded" data-target="price-range-form">Raport Preț</button></li>
                 <li><button class="report-btn text-left w-full bg-blue-500 text-white px-4 py-2 rounded" data-target="location-form">Raport Locație</button></li>
+                <li><button class="report-btn text-left w-full bg-blue-500 text-white px-4 py-2 rounded" data-target="type-form">Raport Tip Oferta</button></li>
             </ul>
         </aside>
 
@@ -135,9 +145,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" name="agent_filter" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Generați Raport</button>
             </form>
 
+            <!-- Type Report Form -->
+            <form id="type-form" method="post" class="report-form <?php echo isset($_POST['type_filter']) ? 'active' : ''; ?>">
+                <h3 class="text-xl font-semibold mb-2">Filtru Tip Ofertă</h3>
+                <div>
+                    <label for="type" class="block text-lg font-medium">Tip Ofertă</label>
+                    <select id="type" name="type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                        <option value="De vanzare" <?php echo $selectedType == 'De vanzare' ? 'selected' : ''; ?>>De vânzare</option>
+                        <option value="De inchiriat" <?php echo $selectedType == 'De inchiriat' ? 'selected' : ''; ?>>De închiriat</option>
+                    </select>
+                </div>
+                <button type="submit" name="type_filter" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Generați Raport</button>
+            </form>
+
             <!-- Report Results -->
             <?php if (!empty($properties)): ?>
                 <h3 class="text-xl font-semibold mb-4 mt-8">Rezultate:</h3>
+                <p class="mb-4">Număr de proprietăți găsite: <?php echo $totalProperties; ?></p>
                 <table class="min-w-full bg-white">
                     <thead>
                         <tr>
