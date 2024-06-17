@@ -103,13 +103,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <tbody>
                     <?php foreach ($users as $user): ?>
                     <tr>
-                        <td class="py-2 px-4 border-b"><?php echo $user['id']; ?></td>
-                        <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($user['first_name']); ?></td>
-                        <td class="py-2 px-4 border-b"><?php echo $user['access']; ?></td>
-                        <td class="py-2 px-4 border-b">
+                        <td class="py-2 px-4 border-b text-center"><?php echo $user['id']; ?></td>
+                        <td class="py-2 px-4 border-b text-center"><?php echo htmlspecialchars($user['first_name']); ?></td>
+                        <td class="py-2 px-4 border-b text-center"><?php echo $user['access']; ?></td>
+                        <td class="py-2 px-4 border-b text-center">
                             <form method="post">
                                 <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                                <select name="access_level">
+                                <select name="access_level" class="text-center">
                                     <option value="0" <?php if ($user['access'] == 0) echo 'selected'; ?>>User</option>
                                     <option value="1" <?php if ($user['access'] == 1) echo 'selected'; ?>>Agent</option>
                                     <option value="2" <?php if ($user['access'] == 2) echo 'selected'; ?>>Admin</option>
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </table>
 
             <h3 class="text-xl font-semibold mt-8 mb-2">Update Property Featured Status</h3>
-            <table class="min-w-full bg-white">
+            <table class="min-w-full bg-white text-center">
                 <thead>
                     <tr>
                         <th class="py-2 px-4 border-b">Property ID</th>

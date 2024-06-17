@@ -60,9 +60,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update User Data</title>
     <link href="output.css" rel="stylesheet">
+    <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
 
-<body>
+<body class="page-background">
 <header>
     <nav class="bg-customOrange-500 border-gray-200">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -79,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500 relative">
                 <li>
-                <a href="agent_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
+                <a href="user_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
                 </li>
                 <li>
                 <a href="#" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contact</a>
@@ -91,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
 </header>
 
     <main class="container mx-auto py-8">
-        <section class="bg-white rounded-lg shadow-md p-6">
+        <section class="bg-white bg-opacity-50 rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-bold mb-4">Actualizeaza-ti informatiile!</h2>
             <form action="update_user.php" method="post" class="space-y-4">
                 <div>

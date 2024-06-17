@@ -33,8 +33,14 @@ $saved_properties = $db->read($query, $params);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard - ImobPlus</title>
     <link rel="stylesheet" href="output.css">
+    <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="page-background">
 <header>
   <nav class="bg-customOrange-500 border-gray-200">
     <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -51,7 +57,7 @@ $saved_properties = $db->read($query, $params);
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul class="flex flex-col px-8 py-2 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500">
           <li>
-            <a href="agent_home.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Acasa</a>
+            <a href="agent_home.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Proprietati</a>
           </li>
           <li>
             <a href="update_user.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Datele mele</a>
@@ -66,7 +72,7 @@ $saved_properties = $db->read($query, $params);
 </header>
 
     <main class="container mx-auto py-8">
-        <section class="p-12 bg-white rounded-lg shadow-md">
+        <section class="p-12 bg-white bg-opacity-50 rounded-lg shadow-md">
             <h1 class="text-3xl font-bold mb-8 text-center">Proprietatile salvate de tine</h1>
             
             <div class="property-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

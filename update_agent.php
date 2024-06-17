@@ -61,9 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_agent'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Agent Data</title>
     <link href="output.css" rel="stylesheet">
+    <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
 
-<body>
+<body class="page-background">
     <header>
     <nav class="bg-customOrange-500 border-gray-200">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -92,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_agent'])) {
     </header>
 
     <main class="container mx-auto py-8">
-        <section class="bg-white rounded-lg shadow-md p-6">
+        <section class="bg-white bg-opacity-50 rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-bold mb-4">Actualizeaza-ti informatiile!</h2>
             <form action="update_agent.php" method="post" class="space-y-4">
                 <div>

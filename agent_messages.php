@@ -48,9 +48,15 @@ $comments = $db->read($query, $params);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comentarii Proprietăți</title>
     <link href="output.css" rel="stylesheet">
+    <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
 
-<body>
+<body class="page-background">
 <header>
     <nav class="bg-customOrange-500 border-gray-200">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -79,7 +85,7 @@ $comments = $db->read($query, $params);
 </header>
 
 <main class="container mx-auto py-8">
-    <section class="comments-section bg-white rounded-lg shadow-md p-4">
+    <section class="comments-section bg-white bg-opacity-50 rounded-lg shadow-md p-4">
         <h2 class="text-2xl font-bold mb-4">Comentarii la proprietățile tale</h2>
         <?php if ($comments): ?>
             <?php foreach ($comments as $comment): ?>

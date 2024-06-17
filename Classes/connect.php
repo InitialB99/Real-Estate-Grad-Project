@@ -9,7 +9,7 @@ class Database
 
     private function connect()
     {
-        // Establish the database connection
+        // Creaza conexiunea cu baza de date
         $connection = new mysqli($this->host, $this->username, $this->password, $this->db);
         if ($connection->connect_error) {
             die('Database connection failed: ' . $connection->connect_error);
@@ -19,7 +19,7 @@ class Database
 
     function read($query, $params = [])
     {
-        // Execute the SELECT query
+        // Citeste din baza de date
         $conn = $this->connect();
         $stmt = $conn->prepare($query);
 
@@ -48,7 +48,7 @@ class Database
 
     function save($query, $params = [])
     {
-        // Execute the INSERT/UPDATE/DELETE query
+        // Executa INSERT/UPDATE/DELETE
         $conn = $this->connect();
         $stmt = $conn->prepare($query);
 
@@ -74,7 +74,7 @@ class Database
 
     private function bindParams($stmt, $params) {
         if (!empty($params)) {
-            // Dynamically build the types string
+            // Creaza dinamic tipul de variabila
             $types = '';
             foreach ($params as $param) {
                 if (is_int($param)) {
@@ -84,10 +84,10 @@ class Database
                 } elseif (is_string($param)) {
                     $types .= 's';
                 } else {
-                    $types .= 'b'; // blob and unknown types
+                    $types .= 'b'; // blob, pentru valori necunoscute
                 }
             }
-            // Bind the parameters
+            // Ataseaza parametrii
             $stmt->bind_param($types, ...$params);
         }
     }

@@ -26,8 +26,14 @@ if ($properties === false) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ImobPlus</title>
   <link rel="stylesheet" href="output.css">
+  <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
-<body>
+<body class="page-background">
 <header class="bg-blue-500 shadow-sm p-4">
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-xl font-bold">ImobPlus</h1>
@@ -53,10 +59,10 @@ if ($properties === false) {
                             <a href="#" class="block py-2 px-3 text-white rounded md:hover:text-gray-900 md:p-0">Contact</a>
                         </li>
                         <li>
-                            <a href="#" class="block py-2 px-3 text-white rounded md:hover:text-gray-900 md:p-0">About</a>
+                            <a href="#" class="block py-2 px-3 text-white rounded md:hover:text-gray-900 md:p-0">Despre noi</a>
                         </li>
                         <li>
-                            <a href="#" class="block py-2 px-3 text-white rounded md:hover:text-gray-900 md:p-0">Services</a>
+                            <a href="#" class="block py-2 px-3 text-white rounded md:hover:text-gray-900 md:p-0">Servicii</a>
                         </li>
                     </ul>
                 </div>
@@ -67,7 +73,7 @@ if ($properties === false) {
 
 
   <main class="container mx-auto py-12">
-    <section class="hero p-12 text-center bg-gray-100 rounded-lg shadow-md">
+    <section class="hero p-12 text-center bg-hero-pattern drop-shadow bg-left-bottom rounded-lg shadow-lg border-4 border-white">
       <h1 class="text-3xl font-bold mb-4">Gaseste-ti casa de vis</h1>
       <p class="text-xl mb-8">Cauta in lista noastra extinsa si gaseste proprietatea perfecta pentru tine.</p>
     </section>
@@ -90,9 +96,9 @@ if ($properties === false) {
           </div>
     </section>
 
-    <footer class="text-center p-4 bg-gray-200">
-      <p>&copy; ImobPlus 2024</p>
-    </footer>
+  <footer class="text-center p-2 bg-gray-200 max-w-md mx-auto">
+    <p>&copy; ImobPlus 2024</p>
+  </footer>
   </main>
 </body>
 </html>

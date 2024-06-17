@@ -93,9 +93,15 @@ $comments = $db->read($query,$params);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalii proprietate</title>
   <link href="output.css" rel="stylesheet">
+  <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
 
-<body>
+<body class="page-background">
 <header>
     <nav class="bg-customOrange-500 border-gray-200">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -158,7 +164,7 @@ $comments = $db->read($query,$params);
                 <!-- Do nothing, hide the button -->
               <?php else: ?>
                   <form action="property_details.php?id=<?php echo htmlspecialchars($propertyid); ?>" method="post">
-                      <button type="submit" name="save_property" class="bg-green-500 text-white px-4 py-2 rounded-md font-bold hover:bg-green-700">Salveaza</button>
+                      <button type="submit" name="save_property" class="bg-green-500 text-white px-4 py-2 rounded-md mb-4 font-bold hover:bg-green-700">Salveaza</button>
                   </form>
               <?php endif; ?>
           </div>

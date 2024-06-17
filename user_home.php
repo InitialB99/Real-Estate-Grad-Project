@@ -54,9 +54,15 @@ $savedPropertiesIds = array_column($savedProperties, 'spropertyid');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaseste-ti proprietatea - ImobPlus</title>
     <link href="output.css" rel="stylesheet">
+    <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
 
-<body>
+<body class="page-background">
 <header>
     <nav class="bg-customOrange-500 border-gray-200">
       <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -73,7 +79,7 @@ $savedPropertiesIds = array_column($savedProperties, 'spropertyid');
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul class="flex flex-col py-2 px-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500">
           <li>
-            <a href="user_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contul Meu</a>
+            <a href="user_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Acasa</a>
           </li>
           <li>
             <a href="#" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contact</a>
@@ -105,7 +111,7 @@ $savedPropertiesIds = array_column($savedProperties, 'spropertyid');
         </section>
     </main>
 
-    <footer class="text-center p-4 bg-gray-200">
+    <footer class="text-center p-2 bg-gray-200 max-w-md mx-auto rounded-lg">
         <p>&copy; ImobPlus 2024</p>
     </footer>
 

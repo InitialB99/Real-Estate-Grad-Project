@@ -57,8 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Property Image</title>
     <link rel="stylesheet" href="output.css">
+    <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="page-background">
     <header>
     <nav class="bg-customOrange-500 border-gray-200">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -88,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </header>
 
     <main class="container mx-auto py-12">
-        <section class="p-12 bg-white rounded-lg shadow-md">
+        <section class="p-12 bg-white bg-opacity-50 rounded-lg shadow-md">
             <h1 class="text-3xl font-bold mb-4 text-center">Incarca o noua proprietate!</h1>
             <form method="post" enctype="multipart/form-data" class="space-y-4">
                 <div>

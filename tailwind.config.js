@@ -3,6 +3,9 @@ module.exports = {
   content: ["./*.{html,js,php}"],
   theme: {
     extend: {
+      backgroundImage: {
+        'hero-pattern': "url('uploads/background.webp')",
+      },
       colors: {
         customRed: {
           100: '#FFE5E5',

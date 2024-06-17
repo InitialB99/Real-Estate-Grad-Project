@@ -86,6 +86,12 @@ $comments = $db->read($query, $params);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editează Proprietatea</title>
     <link href="output.css" rel="stylesheet">
+    <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
     <script>
     function confirmDelete(event) {
         event.preventDefault(); // Prevent the form from submitting immediately
@@ -100,7 +106,7 @@ $comments = $db->read($query, $params);
 </script>
 </head>
 
-<body>
+<body class="page-background">
     <header>
     <nav class="bg-customOrange-500 border-gray-200">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -131,7 +137,7 @@ $comments = $db->read($query, $params);
 
     <main class="container mx-auto py-8">
 
-        <section class="property-details flex flex-wrap">
+        <section class="property-details bg-white bg-opacity-50 flex flex-wrap">
             <div class="images w-full md:w-1/2 mb-8 md:mb-0">
                 <div class="swiper">
                     <div class="swiper-wrapper">

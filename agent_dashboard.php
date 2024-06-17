@@ -29,8 +29,14 @@ $properties = $db->read($query, $params);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agent Dashboard</title>
     <link rel="stylesheet" href="output.css">
+    <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="page-background">
 <header>
   <nav class="bg-customOrange-500 border-gray-200">
     <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -50,7 +56,7 @@ $properties = $db->read($query, $params);
             <a href="admin.php" class="block">Admin</a>
           </li>
           <li>
-            <a href="agent_home.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Acasa</a>
+            <a href="agent_home.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Proprietati</a>
           </li>
           <li>
             <a href="agent_messages.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Mesajele mele</a>
@@ -68,7 +74,7 @@ $properties = $db->read($query, $params);
 </header>
 
     <main class="container mx-auto py-12">
-        <section class="p-12 bg-white rounded-lg shadow-md">
+        <section class="p-12 bg-white bg-opacity-50 rounded-lg shadow-md">
             <h1 class="text-3xl font-bold mb-4 text-center">Proprietatile tale</h1>
             <div class="dashboard">
                 <h2 class="text-2xl font-bold mb-4">Bun venit, <?php echo htmlspecialchars($user_data['first_name']); ?></h2>
