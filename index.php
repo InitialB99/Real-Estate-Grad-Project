@@ -5,7 +5,7 @@ require_once 'Classes/connect.php';
 
 $db = new Database();
 
-$query = 'select * from properties where featured = ? limit 3';
+$query = 'select * from properties where featured = ? limit 6';
 $params = [1];
 $properties = $db->read($query, $params);
 
@@ -96,7 +96,7 @@ if ($properties === false) {
           </div>
     </section>
 
-  <footer class="text-center p-2 bg-gray-200 max-w-md mx-auto">
+  <footer class="text-center p-2 bg-gray-200 max-w-md mx-auto rounded-lg">
     <p>&copy; ImobPlus 2024</p>
   </footer>
   </main>

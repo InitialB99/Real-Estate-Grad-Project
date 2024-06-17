@@ -57,13 +57,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In - ImobPlus</title>
     <link href="output.css" rel="stylesheet">
+    <style>
+        .page-background {
+            background-image: url('uploads/background2.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="page-background">
     <div class="container mx-auto px-4 mt-8 py-8">
         <h1 class="text-3xl font-bold mt-8 mb-4 flex justify-center">Log In</h1>
 
-        <form method="post" class="max-w-md mx-auto mt-8">
+        <form method="post" class="max-w-md mx-auto mt-8 bg-white">
             <div class="mb-4">
                 <label for="email" class="block mb-2">Email:</label>
                 <input value="<?php echo $email ?>" type="email" id="email" name="email" required
