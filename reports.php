@@ -14,15 +14,22 @@ if (!$user_data) {
     die;
 }
 
+$db = new Database();
+$query = ("SELECT id, first_name, last_name FROM users WHERE access <> 0 /*AND sessionid <> ?*/");
+$params = [/*$id*/];
+$agents = $db->read($query,$params);
+
 $report = new Report();
 $properties = [];
 $totalProperties = 0;
+$savedPropertiesCount = 0;
 $selectedType = '';
+$selectedAgentId = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['agent_filter'])) {
-        $agentId = $_POST['agent_id'];
-        $properties = $report->getPropertiesByAgent($agentId);
+        $selectedAgentId = $_POST['agent_id'];
+        $properties = $report->getPropertiesByAgent($selectedAgentId);
         $totalProperties = count($properties);
     } elseif (isset($_POST['price_range'])) {
         $minPrice = $_POST['min_price'];
@@ -37,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $selectedType = $_POST['type'];
         $properties = $report->getPropertiesByType($selectedType);
         $totalProperties = count($properties);
-    } 
+    }
 }
 ?>
 
@@ -59,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 <header>
-    <nav class="bg-customOrange-500 border-gray-200">
+    <nav class="bg-blue-500/75 border-b">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
             <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="./logo.png" class="h-8" alt="Logo" />
@@ -72,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul class="flex flex-col py-2 px-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500">
+                <ul class="flex flex-col py-2 px-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
                     <li>
                         <a href="admin.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
                     </li>
@@ -90,10 +97,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <aside class="w-1/4 bg-gray-100 p-4">
             <h2 class="text-xl font-bold mb-4">Rapoarte Disponibile</h2>
             <ul class="space-y-4">
-                <li><button class="report-btn text-left w-full bg-blue-500 text-white px-4 py-2 rounded" data-target="agent-form">Raport Agent</button></li>
-                <li><button class="report-btn text-left w-full bg-blue-500 text-white px-4 py-2 rounded" data-target="price-range-form">Raport Preț</button></li>
-                <li><button class="report-btn text-left w-full bg-blue-500 text-white px-4 py-2 rounded" data-target="location-form">Raport Locație</button></li>
-                <li><button class="report-btn text-left w-full bg-blue-500 text-white px-4 py-2 rounded" data-target="type-form">Raport Tip Oferta</button></li>
+                <li><button class="report-btn text-left w-full bg-customBlue-500 text-white px-4 py-2 rounded" data-target="agent-form">Raport Proprietati Agent</button></li>
+                <li><button class="report-btn text-left w-full bg-customBlue-500 text-white px-4 py-2 rounded" data-target="price-range-form">Raport Preț</button></li>
+                <li><button class="report-btn text-left w-full bg-customBlue-500 text-white px-4 py-2 rounded" data-target="location-form">Raport Locație</button></li>
+                <li><button class="report-btn text-left w-full bg-customBlue-500 text-white px-4 py-2 rounded" data-target="type-form">Raport Tip Oferta</button></li>
             </ul>
         </aside>
 
@@ -133,11 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div>
                     <label for="agent_id" class="block text-lg font-medium">Agent</label>
                     <select id="agent_id" name="agent_id" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
-                        <?php
-                        $db = new Database();
-                        $agents = $db->read("SELECT id, first_name, last_name FROM users WHERE access = 1");
-                        foreach ($agents as $agent) {
-                            echo "<option value='{$agent['id']}'>{$agent['first_name']} {$agent['last_name']}</option>";
+                        <?php foreach ($agents as $agent) {
+                            $selected = $agent['id'] == $selectedAgentId ? 'selected' : '';
+                            echo "<option value='{$agent['id']}' {$selected}>{$agent['first_name']} {$agent['last_name']}</option>";
                         }
                         ?>
                     </select>
@@ -172,10 +177,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <th class="py-2 px-4 border-b">Pret in euro</th>
                             <th class="py-2 px-4 border-b">Camere</th>
                             <th class="py-2 px-4 border-b">Bai</th>
+                            <?php if(!empty($properties[0]['save_count'])): ?>
+                            <th class="py-2 px-4 border-b">Număr de salvări</th>
+                            <?php endif ?>
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        <?php foreach ($properties as $property): ?>
+                    <?php foreach ($properties as $property): ?>
                         <tr>
                             <td class="py-2 px-4 border-b"><?php echo $property['propertyid']; ?></td>
                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($property['title']); ?></td>
@@ -184,12 +192,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($property['price']); ?></td>
                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($property['rooms']); ?></td>
                             <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($property['bathrooms']); ?></td>
+                            <?php if(!empty($property['save_count'])): ?> 
+                            <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($property['save_count']); ?></td>
+                            <?php endif ?>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             <?php elseif($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-                <p class="text-center text-gray-600">No properties found for the selected report.</p>
+                <p class="text-center text-gray-600">Nicio proprietate gasita pentru agentul selectat</p>
             <?php endif; ?>
         </section>
     </div>

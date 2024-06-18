@@ -57,7 +57,7 @@ const savedPropertiesIds = <?php echo json_encode($savedPropertiesIds); ?>;
         button.setAttribute('type', 'submit');
         if (savedPropertiesIds.includes(card.propertyid)) {
             button.setAttribute('name', 'unsave_property');
-            button.classList.add('bg-customOrange-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-customOrange-700');
+            button.classList.add('bg-customBlue-500', 'text-white', 'px-4', 'py-2', 'rounded-md', 'font-bold', 'hover:bg-customBlue-700');
             button.textContent = 'Salvat';
         } else {
             button.setAttribute('name', 'save_property');

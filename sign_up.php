@@ -51,18 +51,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body class="page-background">
     <div class="container mx-auto px-4 mt-8 py-8">
-        <h1 class="text-3xl font-bold mt-2 mb-8 flex justify-center">Sign In</h1>
+        <h1 class="text-3xl font-bold mt-2 mb-8 flex justify-center">Creaza-ti un cont nou</h1>
 
         <form method="post" class="max-w-md mx-auto bg-white">
             <div class="mb-4">
-                <label for="first_name" class="block mb-2">First Name:</label>
+                <label for="first_name" class="block mb-2">Nume:</label>
                 <input type="text" id="first_name" value="<?php echo $first_name ?>" name="first_name"
                     class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                     pattern="[A-Za-z]+" title="Only characters are allowed">
             </div>
 
             <div class="mb-4">
-                <label for="last_name" class="block mb-2">Last Name:</label>
+                <label for="last_name" class="block mb-2">Prenume:</label>
                 <input type="text" id="last_name" value="<?php echo $last_name ?>" name="last_name" required
                     class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                     pattern="[A-Za-z]+" title="Only characters are allowed">
@@ -75,19 +75,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="mb-4">
-                <label for="password1" class="block mb-2">Password:</label>
+                <label for="password1" class="block mb-2">Parola:</label>
                 <input type="password" id="password1" value="<?php echo $password ?>" name="password" required
                     class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
             </div>
 
             <div class="mb-4">
-                <label for="password2" class="block mb-2">Confirm Password:</label>
+                <label for="password2" class="block mb-2">Confirma Parola:</label>
                 <input type="password" id="password2" value="<?php echo $password2 ?>" name="password2" required
                     class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
             </div>
 
             <button id='b'
-                class="w-full bg-customOrange-500 text-white py-2 px-4 rounded-lg hover:bg-customOrange-600 transition duration-200">Create an Account</button>
+                class="w-full bg-customBlue-500 text-white py-2 px-4 rounded-lg hover:bg-customBlue-600 transition duration-200">Create an Account</button>
         </form>
     </div>
 </body>

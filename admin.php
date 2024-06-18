@@ -16,7 +16,7 @@ if (!$user_data) {
 }
 
 // Fetch all users
-$query = "SELECT id, first_name, access FROM users where id <> ?";
+$query = "SELECT id, first_name, last_name, access FROM users where id <> ?";
 $params = [$user_data['id']];
 $users = $db->read($query,$params);
 
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <header>
-        <nav class="bg-customOrange-500 border-gray-200">
+        <nav class="bg-blue-500/75 border-b">
             <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
                 <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="./logo.png" class="h-8" alt="Logo" />
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </svg>
                 </button>
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <ul class="flex flex-col py-2 px-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500">
+                    <ul class="flex flex-col py-2 px-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
                         <li>
                             <a href="reports.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Rapoarte</a>
                         </li>
@@ -88,33 +88,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </header>
     <main class="container mx-auto py-12">
         <section>
-            <h2 class="text-2xl font-bold mb-4">Admin Dashboard</h2>
+            <h2 class="text-2xl font-bold mb-4">Panou de control</h2>
 
-            <h3 class="text-xl font-semibold mb-2">Update User Access</h3>
+            <h3 class="text-xl font-semibold mb-2">Modifica nivelul de acces al utilizatorilor:</h3>
             <table class="min-w-full bg-white">
                 <thead>
                     <tr>
-                        <th class="py-2 px-4 border-b">User ID</th>
-                        <th class="py-2 px-4 border-b">Name</th>
-                        <th class="py-2 px-4 border-b">Access Level</th>
-                        <th class="py-2 px-4 border-b">Action</th>
+                        <th class="py-2 px-4 border-b">ID</th>
+                        <th class="py-2 px-4 border-b">Nume</th>
+                        <th class="py-2 px-4 border-b">Nivel Acces</th>
+                        <th class="py-2 px-4 border-b">Actiune</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($users as $user): ?>
                     <tr>
                         <td class="py-2 px-4 border-b text-center"><?php echo $user['id']; ?></td>
-                        <td class="py-2 px-4 border-b text-center"><?php echo htmlspecialchars($user['first_name']); ?></td>
-                        <td class="py-2 px-4 border-b text-center"><?php echo $user['access']; ?></td>
+                        <td class="py-2 px-4 border-b text-center"><?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['last_name']); ?></td>
+                        <td class="py-2 px-4 border-b text-center"><?php  switch ($user['access']) {
+                                                                            case 0:
+                                                                                echo 'Client';
+                                                                                break;
+                                                                            case 1:
+                                                                                echo 'Agent';
+                                                                                break;
+                                                                            case 2:
+                                                                                echo 'Admin';
+                                                                                break;
+                                                                        }; ?></td>
                         <td class="py-2 px-4 border-b text-center">
                             <form method="post">
                                 <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
                                 <select name="access_level" class="text-center">
-                                    <option value="0" <?php if ($user['access'] == 0) echo 'selected'; ?>>User</option>
+                                    <option value="0" <?php if ($user['access'] == 0) echo 'selected'; ?>>Client</option>
                                     <option value="1" <?php if ($user['access'] == 1) echo 'selected'; ?>>Agent</option>
                                     <option value="2" <?php if ($user['access'] == 2) echo 'selected'; ?>>Admin</option>
                                 </select>
-                                <button type="submit" name="update_access" class="bg-customBlue-500 text-white px-2 py-1 rounded">Update</button>
+                                <button type="submit" name="update_access" class="bg-customBlue-500 text-white px-2 py-2 rounded">Actualizeaza</button>
                             </form>
                         </td>
                     </tr>
@@ -122,14 +132,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </tbody>
             </table>
 
-            <h3 class="text-xl font-semibold mt-8 mb-2">Update Property Featured Status</h3>
+            <h3 class="text-xl font-semibold mt-8 mb-2">Alege ce proprietati vrei sa promovezi:</h3>
             <table class="min-w-full bg-white text-center">
                 <thead>
                     <tr>
-                        <th class="py-2 px-4 border-b">Property ID</th>
-                        <th class="py-2 px-4 border-b">Title</th>
-                        <th class="py-2 px-4 border-b">Featured</th>
-                        <th class="py-2 px-4 border-b">Action</th>
+                        <th class="py-2 px-4 border-b">ID Proprietate</th>
+                        <th class="py-2 px-4 border-b">Titlu</th>
+                        <th class="py-2 px-4 border-b">Promovare</th>
+                        <th class="py-2 px-4 border-b">Actiune</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -137,15 +147,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <tr>
                         <td class="py-2 px-4 border-b"><?php echo $property['propertyid']; ?></td>
                         <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($property['title']); ?></td>
-                        <td class="py-2 px-4 border-b"><?php echo $property['featured']; ?></td>
+                        <td class="py-2 px-4 border-b"><?php switch($property['featured']) {
+                                                                case 0:
+                                                                    echo 'Nepromovat';
+                                                                    break;
+                                                                case 1:
+                                                                    echo 'Promovat';
+                                                                    break;
+                                                            }; ?></td>
                         <td class="py-2 px-4 border-b">
                             <form method="post">
                                 <input type="hidden" name="property_id" value="<?php echo $property['propertyid']; ?>">
                                 <select name="featured">
-                                    <option value="0" <?php if ($property['featured'] == 0) echo 'selected'; ?>>No</option>
-                                    <option value="1" <?php if ($property['featured'] == 1) echo 'selected'; ?>>Yes</option>
+                                    <option value="0" <?php if ($property['featured'] == 0) echo 'selected'; ?>>Nu</option>
+                                    <option value="1" <?php if ($property['featured'] == 1) echo 'selected'; ?>>Da</option>
                                 </select>
-                                <button type="submit" name="update_featured" class="bg-customBlue-500 text-white px-2 py-1 rounded">Update</button>
+                                <button type="submit" name="update_featured" class="bg-customBlue-500 text-white p-2 rounded">Actualizeaza</button>
                             </form>
                         </td>
                     </tr>

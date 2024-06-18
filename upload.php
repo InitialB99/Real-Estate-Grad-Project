@@ -57,16 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Property Image</title>
     <link rel="stylesheet" href="output.css">
-    <style>
-        .page-background {
-            background-image: url('uploads/background2.jpg');
-            background-size: cover;
-        }
-    </style>
+    <link rel="stylesheet" href="background.css">
 </head>
 <body class="page-background">
     <header>
-    <nav class="bg-customOrange-500 border-gray-200">
+    <nav class="bg-blue-500/75 border-b">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
             <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="./logo.png" class="h-8" alt="Logo" />
@@ -79,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500 relative">
+            <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 relative">
                 <li>
                 <a href="agent_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
                 </li>
@@ -137,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="file" name="image2" id="image2" class="w-full px-4 py-4 border rounded-lg focus:outline-none focus:border-customBlue-500" accept="image/*" required>
                 </div>
                 <input type="hidden" name="agentid" value="<?php echo $user_data['id']; ?>">
-                <button type="submit" class="w-full bg-green-500 text-white px-4 py-4 rounded-lg font-bold hover:bg-green-700">Salveaza</button>
+                <button type="submit" class="w-full bg-green-500 text-white px-4 py-4 rounded-lg font-bold hover:bg-green-700">Adauga</button>
             </form>
         </section>
     </main>

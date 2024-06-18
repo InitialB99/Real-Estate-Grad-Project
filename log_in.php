@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 <body class="page-background">
     <div class="container mx-auto px-4 mt-8 py-8">
-        <h1 class="text-3xl font-bold mt-8 mb-4 flex justify-center">Log In</h1>
+        <h1 class="text-3xl font-bold mt-8 mb-4 flex justify-center">Autentifica-te</h1>
 
         <form method="post" class="max-w-md mx-auto mt-8 bg-white">
             <div class="mb-4">
@@ -77,13 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             </div>
 
             <div class="mb-4">
-                <label for="password" class="block mb-2">Password:</label>
+                <label for="password" class="block mb-2">Parola:</label>
                 <input value="<?php echo $password ?>" type="password" id="password" name="password" required
                     class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-customBlue-500">
             </div>
 
             <button id="login"
-                class="w-full bg-customOrange-500 text-white py-2 px-4 rounded-lg hover:bg-customOrange-600 transition duration-200">Intra in cont</button>
+                class="w-full bg-customBlue-500 text-white py-2 px-4 rounded-lg hover:bg-customBlue-600 transition duration-200">Intra in cont</button>
 
             <a href="sign_up.php"
                 class="block text-center mt-4 text-customBlue-500 hover:text-customBlue-700">Nu ai cont? Creaza unul acum</a>

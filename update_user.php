@@ -60,17 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update User Data</title>
     <link href="output.css" rel="stylesheet">
-    <style>
-        .page-background {
-            background-image: url('uploads/background2.jpg');
-            background-size: cover;
-        }
-    </style>
+    <link rel="stylesheet" href="background.css">
 </head>
 
 <body class="page-background">
 <header>
-    <nav class="bg-customOrange-500 border-gray-200">
+    <nav class="bg-blue-500/75 border-b">
         <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
             <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="./logo.png" class="h-8" alt="Logo" />
@@ -83,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
             </svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500 relative">
+            <ul class="flex flex-col py-2 px-8 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 relative">
                 <li>
                 <a href="user_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
                 </li>
@@ -101,11 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
             <h2 class="text-2xl font-bold mb-4">Actualizeaza-ti informatiile!</h2>
             <form action="update_user.php" method="post" class="space-y-4">
                 <div>
-                    <label for="first_name" class="block text-gray-700">First Name:</label>
+                    <label for="first_name" class="block text-gray-700">Nume:</label>
                     <input type="text" id="first_name" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label for="last_name" class="block text-gray-700">Last Name:</label>
+                    <label for="last_name" class="block text-gray-700">Prenume:</label>
                     <input type="text" id="last_name" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
@@ -113,11 +108,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
                     <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label for="password" class="block text-gray-700">Password:</label>
+                    <label for="password" class="block text-gray-700">Parola:</label>
                     <input type="password" id="password" name="password" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label for="number" class="block text-gray-700">Number:</label>
+                    <label for="number" class="block text-gray-700">Numar de telefon:</label>
                     <input type="text" id="number" name="number" value="<?php echo htmlspecialchars($number); ?>" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500">
                 </div>
                 <div class="flex justify-center">

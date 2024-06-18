@@ -33,16 +33,11 @@ $saved_properties = $db->read($query, $params);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard - ImobPlus</title>
     <link rel="stylesheet" href="output.css">
-    <style>
-        .page-background {
-            background-image: url('uploads/background2.jpg');
-            background-size: cover;
-        }
-    </style>
+    <link rel="stylesheet" href="background.css">
 </head>
 <body class="page-background">
 <header>
-  <nav class="bg-customOrange-500 border-gray-200">
+  <nav class="bg-blue-500/75 border-b">
     <div class="max-w-screen-xxl flex flex-wrap items-center justify-between mx-auto p-2">
       <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="./logo.png" class="h-8" alt="Logo" />
@@ -55,7 +50,7 @@ $saved_properties = $db->read($query, $params);
         </svg>
       </button>
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-        <ul class="flex flex-col px-8 py-2 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-customOrange-500">
+        <ul class="flex flex-col px-8 py-2 mt-2 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
           <li>
             <a href="agent_home.php" class="block hover:md:text-gray-900 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Proprietati</a>
           </li>
