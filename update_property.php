@@ -202,28 +202,6 @@ $comments = $db->read($query, $params);
                         <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 mt-4" onclick="confirmDelete(event)">Șterge</button>
                     </form>
                 </div>
-                <div class="comments-section bg-white rounded-lg shadow-md p-4">
-                    <h3 class="text-xl font-bold mb-2">Comentarii</h3>
-                    <?php if($comments): ?>
-                        <?php foreach($comments as $comment): ?>
-                            <div class="comment mb-4">
-                                <p class="text-gray-600">
-                                    <span class="font-bold">
-                                        <?php echo htmlspecialchars($comment['username']); ?>:
-                                    </span>
-                                    <?php echo htmlspecialchars($comment['comment']); ?>
-                                </p>
-                                <p class="text-gray-500 text-sm">
-                                    <?php echo htmlspecialchars($comment['date']); ?>
-                                </p>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class="text-gray-600">
-                            Nu sunt comentarii.
-                        </p>
-                    <?php endif; ?>
-                </div>
             </div>
         </section>
     </main>

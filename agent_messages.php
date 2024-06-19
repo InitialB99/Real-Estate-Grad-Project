@@ -24,8 +24,9 @@ $agentid = $user_data['id'];
 // Handle delete request
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_comment'])) {
     $comment_id = $_POST['comment_id'];
-    $delete_query = "DELETE FROM comments WHERE commentid = ? AND cpropertyid IN (SELECT propertyid FROM properties WHERE agentid = ?)";
-    $db->save($delete_query, [$comment_id, $agentid]);
+    $query = "DELETE FROM comments WHERE commentid = ? AND cpropertyid IN (SELECT propertyid FROM properties WHERE agentid = ?)";
+    $params = [$comment_id, $agentid];
+    $db->save($query, $params);
     header("Location: ".$_SERVER['PHP_SELF']);
     die;
 }
