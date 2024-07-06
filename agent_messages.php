@@ -48,8 +48,8 @@ $comments = $db->read($query, $params);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comentarii Proprietăți</title>
-    <link href="output.css" rel="stylesheet">
-    <link rel="stylesheet" href="background.css">
+    <link href="CSS/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/background.css">
 </head>
 
 <body class="page-background">

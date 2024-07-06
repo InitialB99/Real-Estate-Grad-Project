@@ -4,7 +4,7 @@
 
 .page-background::before {
     content: '';
-    background-image: url('uploads/background2.jpg');
+    background-image: url('../uploads/background2.jpg');
     background-size: cover;
     background-position: center;
     filter: blur(3.5px);

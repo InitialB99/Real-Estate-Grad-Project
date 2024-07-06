@@ -30,8 +30,8 @@ $access = $user_data['access'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaseste-ti proprietatea - ImobPlus</title>
-    <link href="output.css" rel="stylesheet">
-    <link rel="stylesheet" href="background.css">
+    <link rel="stylesheet" href="CSS/output.css">
+    <link rel="stylesheet" href="CSS/background.css">
 </head>
 
 <body class="page-background">
@@ -54,7 +54,7 @@ $access = $user_data['access'];
             <a href="agent_dashboard.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contul Meu</a>
           </li>
           <li>
-            <a href="#" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contact</a>
+            <a href="contact.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contact</a>
           </li>
           <li>
             <a href="log_out.php" class="block font-bold py-1 px-2 text-white rounded md:bg-transparent hover:md:text-gray-900 hover:shadow-md md:p-0" aria-current="page">Deconecteaza-te</a>

@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page - ImobPlus</title>
-    <link href="output.css" rel="stylesheet">
+    <link href="CSS/output.css" rel="stylesheet">
 </head>
 <body>
     <header>

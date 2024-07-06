@@ -942,7 +942,7 @@ video {
 }
 
 .bg-hero-pattern {
-  background-image: url('uploads/background.webp');
+  background-image: url('../uploads/background.webp');
 }
 
 .bg-left-bottom {

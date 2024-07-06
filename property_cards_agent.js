@@ -49,7 +49,7 @@ async function loadApartmentCards(search = '') {
 
     // display loading
     
-    const res = await fetch(`/ImobPlus/api/properties.php?q=${search}`);
+    const res = await fetch(`./api/properties.php?q=${search}`);
     const data = await res.json();
     
     // hide loading

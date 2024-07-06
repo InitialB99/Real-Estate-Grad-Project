@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In - ImobPlus</title>
-    <link href="output.css" rel="stylesheet">
+    <link href="CSS/output.css" rel="stylesheet">
     <style>
         .page-background {
             background-image: url('uploads/background2.jpg');

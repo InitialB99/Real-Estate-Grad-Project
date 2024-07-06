@@ -48,12 +48,16 @@ $agents = $db->read($query, $params);
     </nav>
 </header>
 <main class="container mx-auto py-12">
-    <section class="bg-white bg-opacity-50 p-8 rounded-lg">
-        <h1 class="text-3xl font-bold mb-8 text-center">Despre Noi</h1>
-        <p class="text-lg mb-8">ImobPlus este o platformă dedicată agenților imobiliari și clienților acestora. Oferim o gamă largă de servicii pentru a facilita interacțiunea între agenții imobiliari și clienți, asigurând o experiență simplă și eficientă pentru toți utilizatorii noștri.</p>
-        
-        <h2 class="text-2xl font-bold mb-4">Misiunea Noastră</h2>
-        <p class="text-lg mb-6">Scopul nostru este să îmbunătățim modul în care agențiile imobiliare și clienții colaborează, oferind o platformă robustă și ușor de utilizat care să răspundă nevoilor tuturor utilizatorilor. Credem în transparență, inovație și servicii de calitate.</p>
+    <section class="mt-8 p-8 max-w-md mx-auto md:mx-0 md:ml-0 md:w-1/3">
+        <h2 class="text-2xl font-bold mb-4">Contacteaza echipa noastră de agenti:</h2>
+        <div class="space-y-8">
+            <?php foreach ($agents as $agent): ?>
+            <div class="p-4 bg-white bg-opacity-50 rounded-lg shadow">
+                <h3 class="text-xl font-bold"><?php echo htmlspecialchars($agent['first_name'] . ' ' . $agent['last_name']); ?></h3>
+                <p class="text-gray-700">0<?php echo htmlspecialchars($agent['number']); ?></p>
+            </div>
+            <?php endforeach; ?>
+        </div>
     </section>
 </main>
 </body>

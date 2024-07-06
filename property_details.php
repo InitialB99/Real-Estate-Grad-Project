@@ -92,8 +92,8 @@ $comments = $db->read($query,$params);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalii proprietate</title>
-  <link href="output.css" rel="stylesheet">
-  <link rel="stylesheet" href="background.css">
+  <link rel="stylesheet" href="CSS/output.css">
+  <link rel="stylesheet" href="CSS/background.css">
 </head>
 
 <body class="page-background">
@@ -116,7 +116,7 @@ $comments = $db->read($query,$params);
                 <a href="agent_home.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Inapoi</a>
                 </li>
                 <li>
-                <a href="#" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contact</a>
+                <a href="contact.php" class="block hover:md:text-gray-900 py-1 px-2 text-white rounded md:hover:bg-transparent md:border-0 md:p-0">Contact</a>
                 </li>
             </ul>
             </div>

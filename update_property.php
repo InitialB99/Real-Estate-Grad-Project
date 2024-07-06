@@ -85,8 +85,8 @@ $comments = $db->read($query, $params);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editează Proprietatea</title>
-    <link href="output.css" rel="stylesheet">
-    <link rel="stylesheet" href="background.css">
+    <link href="CSS/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/background.css">
     <script>
     function confirmDelete(event) {
         event.preventDefault(); // Prevent the form from submitting immediately
